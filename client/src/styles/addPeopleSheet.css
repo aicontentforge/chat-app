@@ -1,0 +1,740 @@
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.add-people-overlay {
+    position: fixed;
+    inset: 0;
+
+    z-index: 100001;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    background: rgba(2, 6, 23, 0.58);
+
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    animation: addPeopleOverlayIn .2s ease;
+}
+
+
+/* =========================================================
+   SHEET
+========================================================= */
+
+.add-people-sheet {
+    width: min(100%, 520px);
+    max-height: min(720px, 88vh);
+
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border-radius: 26px 26px 0 0;
+
+    box-shadow:
+        0 -20px 60px rgba(0, 0, 0, .22);
+
+    overflow: hidden;
+
+    animation: addPeopleSheetIn .25s ease;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.add-people-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 22px 16px;
+
+    border-bottom: 1px solid #eef1f6;
+}
+
+
+.add-people-title-wrapper {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.add-people-icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #2563eb
+        );
+
+    color: #ffffff;
+
+    font-size: 18px;
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, .25);
+}
+
+
+.add-people-title-wrapper h2 {
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+
+.add-people-title-wrapper p {
+    margin: 3px 0 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+
+.add-people-close {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f1f5f9;
+
+    color: #475569;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+
+.add-people-close:hover {
+    background: #e2e8f0;
+
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.add-people-search {
+    margin: 16px 20px 10px;
+
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    background: #f8fafc;
+
+    color: #94a3b8;
+}
+
+
+.add-people-search:focus-within {
+    border-color: #818cf8;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(99, 102, 241, .10);
+}
+
+
+.add-people-search svg {
+    flex-shrink: 0;
+
+    font-size: 14px;
+}
+
+
+.add-people-search input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #111827;
+
+    font-size: 13px;
+}
+
+
+.add-people-search input::placeholder {
+    color: #94a3b8;
+}
+
+
+/* =========================================================
+   SELECTED COUNT
+========================================================= */
+
+.add-people-selected-count {
+    min-height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 22px;
+
+    color: #475569;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+.add-people-selected-count button {
+    border: none;
+
+    background: transparent;
+
+    color: #4f46e5;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   USER LIST
+========================================================= */
+
+.add-people-list {
+    flex: 1;
+
+    min-height: 150px;
+
+    overflow-y: auto;
+
+    padding: 6px 14px 14px;
+}
+
+
+.add-people-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+
+.add-people-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.add-people-list::-webkit-scrollbar-thumb {
+    background: #d7dce7;
+
+    border-radius: 20px;
+}
+
+
+/* =========================================================
+   USER ROW
+========================================================= */
+
+.add-person-row {
+    width: 100%;
+
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 8px 10px;
+
+    margin-bottom: 4px;
+
+    box-sizing: border-box;
+
+    border: 1px solid transparent;
+
+    border-radius: 15px;
+
+    background: transparent;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background .18s ease,
+        border-color .18s ease,
+        transform .18s ease;
+}
+
+
+.add-person-row:hover {
+    background: #f8fafc;
+
+    transform: translateY(-1px);
+}
+
+
+.add-person-row.selected {
+    background: #eef2ff;
+
+    border-color: #c7d2fe;
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.add-person-avatar-wrapper {
+    position: relative;
+
+    width: 46px;
+    height: 46px;
+
+    min-width: 46px;
+}
+
+
+.add-person-avatar {
+    width: 46px;
+    height: 46px;
+
+    display: block;
+
+    border-radius: 14px;
+
+    object-fit: cover;
+
+    background: #f1f5f9;
+
+    box-shadow:
+        0 5px 12px rgba(15, 23, 42, .10);
+}
+
+
+.add-person-online {
+    position: absolute;
+
+    right: -1px;
+    bottom: -1px;
+
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    border: 2px solid #ffffff;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.add-person-info {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.add-person-info strong {
+    color: #111827;
+
+    font-size: 14px;
+    font-weight: 750;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.add-person-info span {
+    color: #94a3b8;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   CHECK
+========================================================= */
+
+.add-person-check {
+    width: 22px;
+    height: 22px;
+
+    min-width: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #cbd5e1;
+
+    border-radius: 50%;
+
+    box-sizing: border-box;
+
+    color: #ffffff;
+
+    font-size: 10px;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+}
+
+
+.add-person-check.checked {
+    background: #4f46e5;
+
+    border-color: #4f46e5;
+
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.add-people-empty {
+    min-height: 230px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+.empty-icon {
+    width: 56px;
+    height: 56px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 12px;
+
+    border-radius: 18px;
+
+    background: #eef2ff;
+
+    color: #6366f1;
+
+    font-size: 20px;
+}
+
+
+.add-people-empty h3 {
+    margin: 0;
+
+    color: #334155;
+
+    font-size: 14px;
+}
+
+
+.add-people-empty p {
+    margin: 6px 0 0;
+
+    color: #94a3b8;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.add-people-footer {
+    display: flex;
+
+    gap: 10px;
+
+    padding: 14px 20px 20px;
+
+    border-top: 1px solid #eef1f6;
+
+    background: #ffffff;
+}
+
+
+.add-people-cancel,
+.add-people-confirm {
+    height: 46px;
+
+    border-radius: 13px;
+
+    border: none;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.add-people-cancel {
+    flex: 1;
+
+    background: #f1f5f9;
+
+    color: #475569;
+}
+
+
+.add-people-cancel:hover {
+    background: #e2e8f0;
+}
+
+
+.add-people-confirm {
+    flex: 1.4;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #2563eb
+        );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, .22);
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+
+.add-people-confirm:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+
+.add-people-confirm:disabled {
+    opacity: .45;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+html[data-theme="dark"] .add-people-sheet {
+    background: var(--surface);
+}
+
+
+html[data-theme="dark"] .add-people-header,
+html[data-theme="dark"] .add-people-footer {
+    border-color: var(--border);
+
+    background: var(--surface);
+}
+
+
+html[data-theme="dark"] .add-people-title-wrapper h2 {
+    color: var(--text);
+}
+
+
+html[data-theme="dark"] .add-people-title-wrapper p,
+html[data-theme="dark"] .add-person-info span {
+    color: var(--text-light);
+}
+
+
+html[data-theme="dark"] .add-people-close {
+    background: var(--surface-light);
+
+    color: var(--text-light);
+}
+
+
+html[data-theme="dark"] .add-people-search {
+    background: var(--surface-light);
+
+    border-color: var(--border);
+}
+
+
+html[data-theme="dark"] .add-people-search input {
+    color: var(--text);
+}
+
+
+html[data-theme="dark"] .add-person-row:hover {
+    background: var(--surface-light);
+}
+
+
+html[data-theme="dark"] .add-person-row.selected {
+    background: rgba(99, 102, 241, .15);
+
+    border-color: rgba(99, 102, 241, .35);
+}
+
+
+html[data-theme="dark"] .add-person-info strong {
+    color: var(--text);
+}
+
+
+html[data-theme="dark"] .add-person-online {
+    border-color: var(--surface);
+}
+
+
+html[data-theme="dark"] .add-people-cancel {
+    background: var(--surface-light);
+
+    color: var(--text-light);
+}
+
+
+html[data-theme="dark"] .add-people-footer {
+    background: var(--surface);
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes addPeopleOverlayIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes addPeopleSheetIn {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .add-people-sheet {
+        max-height: 92vh;
+
+        border-radius: 22px 22px 0 0;
+    }
+
+    .add-people-header {
+        padding: 17px 16px 14px;
+    }
+
+    .add-people-search {
+        margin-left: 14px;
+        margin-right: 14px;
+    }
+
+    .add-people-list {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .add-people-footer {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+}

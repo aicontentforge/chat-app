@@ -1,0 +1,392 @@
+/* =========================================================
+   FULL SCREEN CALL
+========================================================= */
+
+.call-screen {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 99999;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(79, 70, 229, 0.20),
+            transparent 35%
+        ),
+        #171446;
+
+    color: #ffffff;
+
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.call-screen-content {
+
+    width: min(100%, 520px);
+
+    min-height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   APP NAME
+========================================================= */
+
+.call-app-name {
+
+    margin-bottom: 42px;
+
+    color: rgba(255,255,255,.65);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.call-avatar-wrapper {
+
+    position: relative;
+
+    width: 110px;
+    height: 110px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.call-avatar {
+
+    width: 110px;
+    height: 110px;
+
+    display: block;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 3px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.35);
+
+}
+
+
+.call-avatar-fallback {
+
+    width: 110px;
+    height: 110px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #2563eb
+        );
+
+    color: #ffffff;
+
+    font-size: 32px;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.call-contact-name {
+
+    margin: 0;
+
+    max-width: 90%;
+
+    color: #ffffff;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.call-status {
+
+    margin-top: 10px;
+
+    color: rgba(255,255,255,.82);
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+}
+
+
+.call-type-label {
+
+    margin-top: 5px;
+
+    color: rgba(255,255,255,.45);
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.call-controls {
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    gap: 14px;
+
+    margin-top: 55px;
+
+}
+
+
+.call-control-btn {
+
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.13);
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+
+}
+
+
+.call-control-btn svg {
+
+    font-size: 18px;
+
+}
+
+
+.call-control-btn span {
+
+    position: absolute;
+
+    margin-top: 94px;
+
+    font-size: 10px;
+
+    color: rgba(255,255,255,.72);
+
+    white-space: nowrap;
+
+}
+
+
+.call-control-btn:hover {
+
+    background: rgba(255,255,255,.22);
+
+    transform: translateY(-2px);
+
+}
+
+
+.call-control-btn.active {
+
+    background: rgba(255,255,255,.28);
+
+}
+
+
+/* =========================================================
+   END CALL
+========================================================= */
+
+.end-call-btn {
+
+    width: 72px;
+    height: 72px;
+
+    margin-top: 72px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #ef4444;
+
+    color: #ffffff;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 30px rgba(239,68,68,.35);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.end-call-btn:hover {
+
+    transform: scale(1.08);
+
+    box-shadow:
+        0 16px 35px rgba(239,68,68,.45);
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .call-screen-content {
+
+        padding: 20px;
+
+    }
+
+
+    .call-app-name {
+
+        margin-bottom: 30px;
+
+    }
+
+
+    .call-avatar,
+    .call-avatar-wrapper,
+    .call-avatar-fallback {
+
+        width: 100px;
+        height: 100px;
+
+    }
+
+
+    .call-contact-name {
+
+        font-size: 24px;
+
+    }
+
+
+    .call-controls {
+
+        gap: 8px;
+
+        margin-top: 45px;
+
+    }
+
+
+    .call-control-btn {
+
+        width: 56px;
+        height: 56px;
+
+    }
+
+
+    .end-call-btn {
+
+        margin-top: 65px;
+
+    }
+
+}

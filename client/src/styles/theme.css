@@ -1,0 +1,1300 @@
+/* =========================================================
+   CHATSPHERE DESIGN SYSTEM
+========================================================= */
+
+/* =========================================================
+   LIGHT THEME
+========================================================= */
+
+:root {
+    /* Page */
+    --background: #F5F6FA;
+    --chat-bg: #F5F6FA;
+
+    /* Panels */
+    --surface: #FFFFFF;
+    --surface-light: #F8F9FC;
+    --surface-hover: #F1F3F7;
+
+    /* Text */
+    --text: #14161F;
+    --text-light: #6B7280;
+    --text-muted: #9CA3AF;
+
+    /* Borders */
+    --border: #E4E7EE;
+    --border-light: #EEF0F4;
+
+    /* Accent */
+    --primary: #0E7C7B;
+    --primary-dark: #0B6564;
+    --primary-light: #E5F4F3;
+
+    /* Brass */
+    --brass: #B9822A;
+    --brass-light: #FBF3E4;
+
+    /* Inputs */
+    --input-bg: #F8F9FC;
+    --input-focus: #FFFFFF;
+
+    /* Messages */
+    --message-other: #FFFFFF;
+    --message-me: #0E7C7B;
+    --message-me-text: #FFFFFF;
+
+    /* Hover */
+    --hover-bg: #F1F3F7;
+    --sidebar-active: #E7F3F2;
+
+    /* Shadows */
+    --shadow-sm:
+        0 4px 12px rgba(20, 22, 31, 0.05);
+
+    --shadow:
+        0 12px 32px rgba(20, 22, 31, 0.08);
+
+    --shadow-lg:
+        0 20px 50px rgba(20, 22, 31, 0.12);
+
+    /* Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+    --radius-pill: 999px;
+
+    /* Header */
+    --header-bg: #FFFFFF;
+    --header-text: #14161F;
+    --header-border: #E4E7EE;
+    --header-button-bg: #F5F6FA;
+    --header-button-hover: #E9ECEF;
+
+    /* Composer */
+    --composer-bg: #FFFFFF;
+    --composer-input-bg: #F5F6FA;
+
+    /* Action toolbar */
+    --action-bg: #FFFFFF;
+    --action-button-bg: #F3F5F8;
+    --action-button-hover: #E4E8ED;
+
+    /* More menu */
+    --menu-bg: #FFFFFF;
+    --menu-hover: #F5F6FA;
+
+    /* Search */
+    --search-bg: #F5F6FA;
+
+    /* Scrollbar */
+    --scrollbar: #D4D8E0;
+    --scrollbar-hover: #B9BEC8;
+}
+
+
+/* =========================================================
+   DARK THEME
+========================================================= */
+
+[data-theme="dark"] {
+
+    /* Page */
+    --background: #0F1117;
+    --chat-bg: #0F1117;
+
+    /* Panels */
+    --surface: #171922;
+    --surface-light: #1C1F29;
+    --surface-hover: #222631;
+
+    /* Text */
+    --text: #F2F3F7;
+    --text-light: #9AA1AE;
+    --text-muted: #6F7684;
+
+    /* Borders */
+    --border: #262A38;
+    --border-light: #20232E;
+
+    /* Accent */
+    --primary: #1BB8B5;
+    --primary-dark: #3CCBC8;
+    --primary-light: #173C3D;
+
+    /* Brass */
+    --brass: #E0A94A;
+    --brass-light: #3A2E1C;
+
+    /* Inputs */
+    --input-bg: #1C1F29;
+    --input-focus: #20232E;
+
+    /* Messages */
+    --message-other: #1C1F29;
+    --message-me: #1BB8B5;
+    --message-me-text: #FFFFFF;
+
+    /* Hover */
+    --hover-bg: #222631;
+    --sidebar-active: rgba(27, 184, 181, 0.14);
+
+    /* Shadows */
+    --shadow-sm:
+        0 4px 14px rgba(0, 0, 0, 0.22);
+
+    --shadow:
+        0 12px 32px rgba(0, 0, 0, 0.30);
+
+    --shadow-lg:
+        0 20px 50px rgba(0, 0, 0, 0.42);
+
+    /* Header */
+    --header-bg: #171922;
+    --header-text: #F2F3F7;
+    --header-border: #262A38;
+    --header-button-bg: #20232E;
+    --header-button-hover: #292D39;
+
+    /* Composer */
+    --composer-bg: #171922;
+    --composer-input-bg: #1C1F29;
+
+    /* Action toolbar */
+    --action-bg: #171922;
+    --action-button-bg: #20232E;
+    --action-button-hover: #2A2E39;
+
+    /* More menu */
+    --menu-bg: #171922;
+    --menu-hover: #222631;
+
+    /* Search */
+    --search-bg: #1C1F29;
+
+    /* Scrollbar */
+    --scrollbar: #343946;
+    --scrollbar-hover: #464C5A;
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    min-height: 100%;
+}
+
+html {
+    background: var(--background);
+}
+
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+
+    background: var(--background);
+    color: var(--text);
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
+}
+
+
+/* =========================================================
+   GLOBAL TEXT
+========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+    transition:
+        color 0.25s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--text);
+}
+
+p {
+    color: var(--text);
+}
+
+
+/* =========================================================
+   CHAT LAYOUT
+========================================================= */
+
+.chat-layout {
+
+    min-height: 100vh;
+
+    background: var(--chat-bg);
+
+    color: var(--text);
+}
+
+
+/* =========================================================
+   MAIN PANELS
+========================================================= */
+
+.chat-main,
+.sidebar,
+.details-panel {
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    border-color: var(--border);
+
+    box-shadow: var(--shadow);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+
+    background: var(--header-bg);
+
+    color: var(--header-text);
+
+    border-bottom:
+        1px solid
+        var(--header-border);
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}
+
+.header h1,
+.header h2,
+.header h3,
+.header h4,
+.header p,
+.header span {
+
+    color: var(--header-text);
+}
+
+
+/* =========================================================
+   HEADER STATUS
+========================================================= */
+
+.status {
+    color: var(--text-light);
+}
+
+.status.online {
+    color: #22C55E;
+}
+
+.status-dot {
+    background: #22C55E;
+}
+
+
+/* =========================================================
+   HEADER ICON BUTTONS
+========================================================= */
+
+.icon-btn {
+
+    background: var(--header-button-bg);
+
+    color: var(--header-text);
+
+    border-color: var(--header-border);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.icon-btn:hover {
+
+    background: var(--header-button-hover);
+
+    color: var(--primary);
+
+    border-color: var(--primary);
+}
+
+
+/* Voice call */
+
+.phone-btn {
+    color: #22C55E;
+}
+
+.phone-btn:hover {
+    color: #22C55E;
+    border-color: #22C55E;
+}
+
+
+/* Video */
+
+.video-btn {
+    color: #8B5CF6;
+}
+
+.video-btn:hover {
+    color: #A78BFA;
+    border-color: #8B5CF6;
+}
+
+
+/* Theme */
+
+.theme-btn {
+    color: var(--brass);
+}
+
+.theme-btn:hover {
+    color: var(--brass);
+    border-color: var(--brass);
+}
+
+
+/* More */
+
+.more-btn {
+    color: var(--header-text);
+}
+
+.more-btn:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   SIDEBAR SEARCH
+========================================================= */
+
+.sidebar-search {
+
+    background: var(--search-bg);
+
+    color: var(--text);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: var(--radius-md);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.sidebar-search::placeholder {
+    color: var(--text-light);
+}
+
+.sidebar-search:focus {
+
+    background: var(--surface);
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(14, 124, 123, 0.12);
+}
+
+
+/* =========================================================
+   CHAT CARDS
+========================================================= */
+
+.chat-card {
+
+    color: var(--text);
+
+    border-radius: var(--radius-lg);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.chat-card:hover {
+
+    background: var(--hover-bg);
+
+    transform: translateY(-1px);
+}
+
+.chat-card.active {
+
+    background: var(--sidebar-active);
+
+    color: var(--text);
+
+    border-left:
+        3px solid
+        var(--primary);
+}
+
+
+/* =========================================================
+   GROUP CARD
+========================================================= */
+
+.group-card {
+
+    background: var(--surface-light);
+
+    color: var(--text);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: var(--radius-lg);
+}
+
+.group-card:hover {
+
+    background: var(--hover-bg);
+
+    border-color: var(--primary);
+}
+
+
+/* =========================================================
+   SIDEBAR TEXT
+========================================================= */
+
+.sidebar h1,
+.sidebar h2,
+.sidebar h3,
+.sidebar h4,
+.sidebar p,
+.sidebar span {
+
+    color: var(--text);
+}
+
+.sidebar small {
+
+    color: var(--text-light);
+}
+
+
+/* =========================================================
+   NEW CHAT / NEW GROUP
+========================================================= */
+
+.new-chat-btn {
+
+    background: var(--primary);
+
+    color: #FFFFFF;
+
+    border:
+        1px solid
+        var(--primary);
+
+    border-radius: var(--radius-sm);
+}
+
+.new-chat-btn:hover {
+
+    background: var(--primary-dark);
+
+    border-color: var(--primary-dark);
+}
+
+
+/* New Group = outline */
+
+.new-group-btn {
+
+    background: transparent;
+
+    color: var(--primary);
+
+    border:
+        1px solid
+        var(--primary);
+
+    border-radius: var(--radius-sm);
+
+    box-shadow: none;
+}
+
+.new-group-btn:hover {
+
+    background: var(--primary-light);
+
+    color: var(--primary);
+
+    border-color: var(--primary);
+}
+
+
+/* =========================================================
+   SEARCH / MESSAGE SEARCH
+========================================================= */
+
+.search-bar,
+.search-messages,
+.message-search,
+.chat-search {
+
+    background: var(--search-bg);
+
+    color: var(--text);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: var(--radius-md);
+}
+
+.search-bar::placeholder,
+.search-messages::placeholder,
+.message-search::placeholder,
+.chat-search::placeholder {
+
+    color: var(--text-light);
+}
+
+.search-bar:focus,
+.search-messages:focus,
+.message-search:focus,
+.chat-search:focus {
+
+    background: var(--surface);
+
+    border-color: var(--primary);
+
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(14, 124, 123, 0.12);
+}
+
+
+/* =========================================================
+   CHAT MESSAGE AREA
+========================================================= */
+
+.chatbox-wrapper {
+
+    background: var(--background);
+
+    color: var(--text);
+}
+
+.chat-messages {
+
+    background: transparent;
+
+    color: var(--text);
+}
+
+
+/* =========================================================
+   MESSAGE BUBBLES
+========================================================= */
+
+.message-row.other .message-bubble {
+
+    background: var(--message-other);
+
+    color: var(--text);
+
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.message-row.me .message-bubble {
+
+    background: var(--message-me);
+
+    color: var(--message-me-text);
+
+    border: none;
+
+    box-shadow:
+        0 6px 18px
+        rgba(14, 124, 123, 0.18);
+}
+
+
+/* =========================================================
+   MESSAGE TEXT
+========================================================= */
+
+.message-text {
+    color: var(--text);
+}
+
+.message-row.me .message-text {
+    color: #FFFFFF;
+}
+
+
+/* =========================================================
+   SENDER NAME
+========================================================= */
+
+.sender-name {
+
+    color: var(--text-light);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MESSAGE FOOTER
+========================================================= */
+
+.message-footer {
+
+    color: var(--text-light);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.message-row.me .message-footer {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+
+/* =========================================================
+   TICKS
+========================================================= */
+
+.ticks {
+    color: inherit;
+}
+
+
+/* =========================================================
+   REPLY CARD
+========================================================= */
+
+.reply-card {
+
+    background: var(--surface-light);
+
+    color: var(--text-light);
+
+    border-left:
+        3px solid
+        var(--primary);
+}
+
+.message-row.me .reply-card {
+
+    background:
+        rgba(255, 255, 255, 0.10);
+
+    color:
+        rgba(255, 255, 255, 0.80);
+
+    border-left-color:
+        rgba(255, 255, 255, 0.75);
+}
+
+
+/* =========================================================
+   MESSAGE IMAGE
+========================================================= */
+
+.message-image {
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================================
+   FILE CARD
+========================================================= */
+
+.file-card {
+
+    background: var(--surface-light);
+
+    color: var(--primary);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: var(--radius-md);
+}
+
+.file-card a {
+
+    color: var(--primary);
+
+}
+
+
+/* =========================================================
+   MESSAGE ACTION TOOLBAR
+========================================================= */
+
+.message-actions {
+
+    background: var(--action-bg);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-pill);
+
+    box-shadow:
+        var(--shadow);
+
+    padding: 5px;
+
+    gap: 4px;
+}
+
+.message-actions button {
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: var(--action-button-bg);
+
+    color: var(--text-light);
+
+    border:
+        1px solid
+        transparent;
+
+    border-radius:
+        var(--radius-pill);
+
+    box-shadow: none;
+
+    padding: 0;
+}
+
+.message-actions button:hover {
+
+    background: var(--action-button-hover);
+
+    color: var(--primary);
+
+    border-color: var(--border);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   REACTION
+========================================================= */
+
+.reaction {
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================================
+   REACTION PICKER
+========================================================= */
+
+.reaction-picker {
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow:
+        var(--shadow-lg);
+
+    border-radius:
+        var(--radius-pill);
+}
+
+.reaction-picker span:hover {
+
+    transform: scale(1.2);
+}
+
+
+/* =========================================================
+   COMPOSER
+========================================================= */
+
+.message-input,
+.message-input-container,
+.chat-input,
+.chat-input-container,
+.input-area,
+.composer,
+.message-composer {
+
+    background: var(--composer-bg);
+
+    color: var(--text);
+
+    border-color: var(--border);
+}
+
+
+/* =========================================================
+   COMPOSER INPUT
+========================================================= */
+
+.message-input input,
+.message-input textarea,
+.message-input-container input,
+.message-input-container textarea,
+.chat-input input,
+.chat-input textarea {
+
+    background: var(--composer-input-bg);
+
+    color: var(--text);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-md);
+}
+
+.message-input input::placeholder,
+.message-input textarea::placeholder,
+.message-input-container input::placeholder,
+.message-input-container textarea::placeholder,
+.chat-input input::placeholder,
+.chat-input textarea::placeholder {
+
+    color: var(--text-light);
+}
+
+.message-input input:focus,
+.message-input textarea:focus,
+.message-input-container input:focus,
+.message-input-container textarea:focus,
+.chat-input input:focus,
+.chat-input textarea:focus {
+
+    background: var(--input-focus);
+
+    color: var(--text);
+
+    border-color: var(--primary);
+
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(14, 124, 123, 0.12);
+}
+
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
+
+.send-btn {
+
+    background: var(--primary);
+
+    color: #FFFFFF;
+
+    border: none;
+
+    border-radius:
+        var(--radius-pill);
+
+    box-shadow:
+        0 8px 20px
+        rgba(14, 124, 123, 0.25);
+}
+
+.send-btn:hover {
+
+    background: var(--primary-dark);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   COMPOSER ICON BUTTONS
+========================================================= */
+
+.composer button,
+.message-composer button,
+.input-area button {
+
+    background: var(--surface-light);
+
+    color: var(--text);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: var(--radius-sm);
+
+    box-shadow: none;
+}
+
+.composer button:hover,
+.message-composer button:hover,
+.input-area button:hover {
+
+    background: var(--hover-bg);
+
+    color: var(--primary);
+
+    border-color: var(--primary);
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card {
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+
+    box-shadow: var(--shadow);
+
+}
+
+
+/* =========================================================
+   DETAILS PANEL
+========================================================= */
+
+.details-panel {
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    border:
+        1px solid
+        var(--border);
+}
+
+.details-panel h1,
+.details-panel h2,
+.details-panel h3,
+.details-panel h4,
+.details-panel p,
+.details-panel span {
+
+    color: var(--text);
+}
+
+
+/* =========================================================
+   MORE DROPDOWN
+========================================================= */
+
+.more-dropdown {
+
+    background: var(--menu-bg);
+
+    color: var(--text);
+
+    border:
+        1px solid
+        var(--border);
+
+    box-shadow: var(--shadow-lg);
+
+    border-radius:
+        var(--radius-md);
+}
+
+.more-dropdown button {
+
+    background: transparent;
+
+    color: var(--text);
+
+    border: none;
+
+    box-shadow: none;
+
+    border-radius: 0;
+}
+
+.more-dropdown button:hover {
+
+    background: var(--menu-hover);
+
+    color: var(--primary);
+
+    transform: none;
+}
+
+
+/* =========================================================
+   PROFILE BUTTON
+========================================================= */
+
+.profile-btn {
+
+    background: var(--primary);
+
+    color: #FFFFFF;
+
+    border:
+        1px solid
+        var(--primary);
+
+    border-radius: var(--radius-sm);
+}
+
+.profile-btn:hover {
+
+    background: var(--primary-dark);
+
+    border-color: var(--primary-dark);
+}
+
+
+/* =========================================================
+   LOGOUT BUTTON
+========================================================= */
+
+.logout-btn {
+
+    background: transparent;
+
+    color: #DC2626;
+
+    border:
+        1px solid
+        #DC2626;
+
+    border-radius: var(--radius-sm);
+
+    box-shadow: none;
+}
+
+.logout-btn:hover {
+
+    background: #DC2626;
+
+    color: #FFFFFF;
+
+    border-color: #DC2626;
+}
+
+
+/* =========================================================
+   AVATARS
+========================================================= */
+
+.chat-avatar,
+.header-avatar {
+
+    border-radius:
+        var(--radius-pill);
+}
+
+
+/* =========================================================
+   ONLINE DOT
+========================================================= */
+
+.online-dot {
+
+    background: #22C55E;
+
+    box-shadow:
+        0 0 12px
+        rgba(34, 197, 94, 0.55);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: var(--scrollbar);
+
+    border-radius:
+        var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+    background: var(--scrollbar-hover);
+}
+
+::-webkit-scrollbar-track {
+
+    background: transparent;
+}
+
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection {
+
+    background:
+        rgba(14, 124, 123, 0.22);
+
+    color: var(--text);
+}
+
+
+/* =========================================================
+   DISABLED
+========================================================= */
+
+button:disabled,
+input:disabled,
+textarea:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none !important;
+}
+
+
+/* =========================================================
+   DARK MODE EXTRA TUNING
+========================================================= */
+
+[data-theme="dark"] {
+
+    color-scheme: dark;
+}
+
+[data-theme="dark"] .message-row.other .message-bubble {
+
+    box-shadow:
+        0 6px 20px
+        rgba(0, 0, 0, 0.20);
+}
+
+[data-theme="dark"] .send-btn {
+
+    box-shadow:
+        0 8px 24px
+        rgba(27, 184, 181, 0.20);
+}
+
+
+/* =========================================================
+   LIGHT MODE EXTRA TUNING
+========================================================= */
+
+[data-theme="light"] {
+
+    color-scheme: light;
+}

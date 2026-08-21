@@ -1,0 +1,205 @@
+.supporters-page {
+    min-height: 100vh;
+    padding: 30px;
+    background: #f5f7fb;
+    box-sizing: border-box;
+}
+
+.back-button {
+    border: none;
+    background: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.supporters-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.supporters-header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+.supporters-header p {
+    margin-top: 8px;
+    color: #666;
+}
+
+.top-donor-card {
+    max-width: 500px;
+    margin: 0 auto 35px;
+    background: white;
+    border-radius: 24px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+}
+
+.top-donor-crown {
+    font-size: 55px;
+}
+
+.top-donor-rank {
+    font-weight: 800;
+    margin: 5px 0 20px;
+}
+
+.top-donor-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-bottom: 12px;
+}
+
+.top-donor-card h2 {
+    margin: 5px 0;
+}
+
+.top-donor-card p {
+    color: #777;
+}
+
+.top-donor-badge {
+    display: inline-block;
+    margin: 12px 0;
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: #fff3c4;
+    font-weight: 700;
+}
+
+.top-donor-amount {
+    font-size: 28px;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+.top-donor-card > span {
+    color: #777;
+}
+
+.supporters-list {
+    max-width: 850px;
+    margin: auto;
+}
+
+.supporters-list h2 {
+    margin-bottom: 15px;
+}
+
+.supporter-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    padding: 15px 18px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.supporter-row:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.supporter-rank {
+    width: 45px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.supporter-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.supporter-info {
+    flex: 1;
+}
+
+.supporter-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.supporter-info small {
+    color: #777;
+}
+
+.supporter-total {
+    font-weight: 800;
+    font-size: 17px;
+}
+
+.supporter-number-badge {
+    background: #e8efff;
+    color: #2563eb;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.supporter-donor-badge {
+    background: #e7f8f3;
+    color: #00866a;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.you-label {
+    background: #2563eb;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+}
+
+.your-position-divider {
+    text-align: center;
+    margin: 25px 0 12px;
+    color: #777;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.your-supporter-row {
+    border: 2px solid #2563eb;
+}
+
+.supporters-loading,
+.supporters-error,
+.no-supporters {
+    max-width: 600px;
+    margin: 60px auto;
+    text-align: center;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+}
+
+.supporters-error button {
+    display: block;
+    margin: 15px auto 0;
+    padding: 9px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.empty-icon {
+    font-size: 50px;
+}

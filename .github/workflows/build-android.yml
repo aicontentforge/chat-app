@@ -1,0 +1,125 @@
+name: Build Android APK / AAB
+
+# This workflow exists because building an Android app requires Google's
+# Android SDK + Gradle's distribution servers, which are not reachable
+# from the sandbox this project was assembled in. GitHub's own runners
+# have full internet access, so this does the actual compiling for you.
+#
+# HOW TO USE:
+#   1. Push this whole repo to GitHub.
+#   2. Go to the repo's "Actions" tab and run this workflow (or just
+#      push to main - it runs automatically).
+#   3. When it finishes, open the run and download the "release-build"
+#      artifact at the bottom of the page. Inside you'll find:
+#        - app-release.aab  -> upload THIS to Google Play Console
+#        - app-release.apk  -> install this directly on a phone to test
+#
+# A "debug-build" artifact (debug-signed APK) is produced on every run
+# regardless of secrets, so you always get something installable to test
+# with even before setting up release signing below.
+#
+# REQUIRED SECRETS (Settings -> Secrets and variables -> Actions) for the
+# signed release build. Values come from keystore/keystore-info.txt in
+# this project:
+#   ANDROID_KEYSTORE_BASE64   (base64 of chatsphere-release.keystore - see below)
+#   ANDROID_KEYSTORE_PASSWORD
+#   ANDROID_KEY_ALIAS
+#   ANDROID_KEY_PASSWORD
+#
+# To get the base64 value of the keystore file, run this on your own
+# machine (not in this repo) and paste the output as the secret value:
+#   macOS/Linux: base64 -i chatsphere-release.keystore | tr -d '\n'
+#   Windows (PowerShell): [Convert]::ToBase64String([IO.File]::ReadAllBytes("chatsphere-release.keystore"))
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install client dependencies
+        working-directory: client
+        run: npm ci
+
+      - name: Build web app
+        working-directory: client
+        run: npm run build
+
+      - name: Sync Capacitor Android project
+        working-directory: client
+        run: npx cap sync android
+
+      - name: Make gradlew executable
+        working-directory: client/android
+        run: chmod +x gradlew
+
+      - name: Build debug APK (always, no secrets needed)
+        working-directory: client/android
+        run: ./gradlew assembleDebug
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-build
+          path: client/android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Check release signing secrets are present
+        id: signing_check
+        run: |
+          if [ -n "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" ]; then
+            echo "has_secrets=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_secrets=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Decode release keystore
+        if: steps.signing_check.outputs.has_secrets == 'true'
+        working-directory: client/android
+        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > app/chatsphere-release.keystore
+
+      - name: Write keystore.properties
+        if: steps.signing_check.outputs.has_secrets == 'true'
+        working-directory: client/android
+        run: |
+          cat > keystore.properties << EOF
+          storeFile=chatsphere-release.keystore
+          storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+          keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+          EOF
+
+      - name: Build signed release APK + AAB
+        if: steps.signing_check.outputs.has_secrets == 'true'
+        working-directory: client/android
+        run: ./gradlew assembleRelease bundleRelease
+
+      - name: Upload signed release build
+        if: steps.signing_check.outputs.has_secrets == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-build
+          path: |
+            client/android/app/build/outputs/apk/release/app-release.apk
+            client/android/app/build/outputs/bundle/release/app-release.aab

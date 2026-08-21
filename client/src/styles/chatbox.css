@@ -1,0 +1,253 @@
+/* =========================================
+   CHAT BOX
+   ========================================= */
+
+.chatbox-wrapper {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    background: var(--background);
+
+    border-radius: 0;
+
+    overflow: visible;
+}
+
+
+/* =========================================
+   BACKGROUND
+   ========================================= */
+
+.chatbox-background {
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(14, 124, 123, .08),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(185, 130, 42, .06),
+            transparent 35%
+        );
+
+    opacity: 1;
+
+    z-index: 0;
+}
+
+
+/* =========================================
+   MESSAGES
+   ========================================= */
+
+/*
+   IMPORTANT:
+   Do NOT put overflow-y:auto here.
+
+   The .messages element in Chat.jsx
+   is the ONLY scrolling container.
+*/
+
+.chat-messages {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    /*
+       Allow the parent .messages to control
+       the height and scrolling.
+    */
+
+    overflow: visible;
+
+    padding: 0;
+
+    flex: 0 0 auto;
+}
+
+
+/* =========================================
+   INDIVIDUAL MESSAGE ROW
+   ========================================= */
+
+.chat-message-row {
+    width: 100%;
+
+    flex: 0 0 auto;
+}
+
+
+/* =========================================
+   DATE
+   ========================================= */
+
+.chat-date {
+    align-self: center;
+
+    width: max-content;
+
+    margin: 18px auto;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    color: var(--text-light);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 3px 12px
+        rgba(15, 23, 42, .05);
+}
+
+
+/* =========================================
+   EMPTY CHAT
+   ========================================= */
+
+.empty-chat {
+    min-height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    color: var(--text);
+
+    padding: 40px;
+}
+
+
+.empty-icon {
+    width: 68px;
+
+    height: 68px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 18px;
+
+    border-radius: 50%;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    color: var(--accent);
+
+    font-size: 32px;
+
+    box-shadow:
+        0 8px 24px
+        rgba(15, 23, 42, .08);
+}
+
+
+.empty-chat h2 {
+    margin: 0 0 7px;
+
+    color: var(--text);
+
+    font-size: 20px;
+
+    font-weight: 700;
+}
+
+
+.empty-chat p {
+    margin: 0;
+
+    color: var(--text-light);
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   AUTO SCROLL ANCHOR
+   ========================================= */
+
+.chat-bottom-anchor {
+    width: 100%;
+
+    height: 1px;
+
+    flex: 0 0 1px;
+}
+
+
+/* =========================================
+   DARK MODE
+   ========================================= */
+
+html[data-theme="dark"] .chatbox-wrapper {
+    background: var(--background);
+}
+
+
+html[data-theme="dark"] .chatbox-background {
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(27, 184, 181, .06),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(224, 169, 74, .04),
+            transparent 35%
+        );
+}
+
+
+html[data-theme="dark"] .chat-date {
+    background: var(--surface);
+
+    border-color: var(--border);
+
+    color: var(--text-light);
+}
+
+
+html[data-theme="dark"] .empty-icon {
+    background: var(--surface);
+
+    border-color: var(--border);
+}

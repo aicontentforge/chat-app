@@ -1,0 +1,950 @@
+/* =========================================
+   MESSAGE ROW
+========================================= */
+
+.message-row {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 8px;
+
+    margin: 10px 0;
+
+    position: relative;
+
+    box-sizing: border-box;
+}
+
+
+.message-row.me {
+    justify-content: flex-end;
+}
+
+
+.message-row.other {
+    justify-content: flex-start;
+}
+
+
+/* =========================================
+   AVATAR
+========================================= */
+
+.message-row .chat-avatar {
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, .08);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.message-row .chat-avatar:hover {
+
+    transform: scale(1.04);
+
+}
+
+
+/* =========================================
+   MESSAGE WRAPPER
+========================================= */
+
+.message-wrapper {
+
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    max-width: min(68%, 620px);
+
+    min-width: 0;
+}
+
+
+.message-row.me .message-wrapper {
+
+    align-items: flex-end;
+}
+
+
+.message-row.other .message-wrapper {
+
+    align-items: flex-start;
+}
+
+
+/* =========================================
+   SENDER NAME
+========================================= */
+
+.sender-name {
+
+    margin-bottom: 5px;
+
+    padding-left: 4px;
+
+    color: var(--text-light);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+}
+
+
+/* =========================================
+   MESSAGE BUBBLE
+========================================= */
+
+.message-bubble {
+
+    position: relative;
+
+    width: fit-content;
+
+    max-width: 100%;
+
+    padding: 11px 13px;
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 3px 12px rgba(15, 23, 42, .06);
+
+    transition:
+        background-color .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.message-row.other .message-bubble {
+
+    border-bottom-left-radius: 5px;
+
+}
+
+.message-row.me .message-time {
+
+    color: rgba(255, 255, 255, .78);
+
+}
+
+
+.message-row.me .message-text {
+
+    color: #ffffff;
+
+}
+
+.message-row.me .ticks {
+
+    color: #ffffff;
+
+}
+
+.message-row.me .message-bubble {
+
+    background: #2563eb;
+
+    border-color: #2563eb;
+
+    color: #ffffff;
+
+    border-bottom-right-radius: 5px;
+
+    box-shadow:
+        0 6px 18px rgba(37, 99, 235, .22);
+
+}
+
+
+
+.message-bubble:hover {
+
+    box-shadow:
+        0 6px 20px
+        rgba(15, 23, 42, .08);
+}
+
+
+/* =========================================
+   MESSAGE TEXT
+========================================= */
+
+.message-text {
+
+    margin: 0;
+
+    color: inherit;
+
+    font-size: 14px;
+
+    font-weight: 400;
+
+    line-height: 1.55;
+
+    white-space: pre-wrap;
+
+    word-break: break-word;
+}
+
+
+/* =========================================
+   REPLY CARD
+========================================= */
+
+.reply-card {
+
+    margin-bottom: 8px;
+
+    padding: 8px 10px;
+
+    border-left: 3px solid var(--accent);
+
+    border-radius: 7px;
+
+    background: rgba(14, 124, 123, .07);
+
+    color: var(--text-light);
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+}
+
+
+.message-row.me .reply-card {
+
+    background: rgba(255, 255, 255, .13);
+
+    border-left-color: rgba(255, 255, 255, .8);
+
+    color: rgba(255, 255, 255, .86);
+
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.message-image {
+
+    display: block;
+
+    width: 100%;
+
+    max-width: 360px;
+
+    max-height: 420px;
+
+    object-fit: cover;
+
+    margin-top: 5px;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================
+   AUDIO
+========================================= */
+
+.message-audio {
+
+    display: block;
+
+    width: min(300px, 100%);
+
+    margin-top: 5px;
+
+}
+
+
+/* =========================================
+   FILE
+========================================= */
+
+.file-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 5px;
+
+    padding: 10px 12px;
+
+    border-radius: 8px;
+
+    background: var(--surface-light);
+
+    border: 1px solid var(--border);
+
+    color: var(--accent);
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    max-width: 300px;
+
+}
+
+
+.message-row.me .file-card {
+
+    background: rgba(255, 255, 255, .12);
+
+    border-color: rgba(255, 255, 255, .18);
+
+    color: #ffffff;
+
+}
+
+
+.file-icon {
+
+    font-size: 18px;
+
+    flex-shrink: 0;
+
+}
+
+
+.file-name {
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================
+   MESSAGE FOOTER
+========================================= */
+
+.message-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 6px;
+
+    margin-top: 6px;
+
+    min-height: 14px;
+
+    color: var(--text-light);
+
+    font-size: 10px;
+
+    line-height: 1;
+}
+
+
+.message-row.me .message-footer {
+
+    color: rgba(255, 255, 255, .72);
+
+}
+
+
+.message-time {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+}
+
+
+.edited-label {
+
+    font-size: 10px;
+
+}
+
+
+/* =========================================
+   READ TICKS
+========================================= */
+
+.ticks {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.ticks svg {
+
+    width: 12px;
+    height: 12px;
+
+}
+
+
+/* =========================================
+   REACTION
+========================================= */
+
+.reaction {
+
+    position: absolute;
+
+    right: 8px;
+
+    bottom: -17px;
+
+    z-index: 4;
+
+    min-width: 27px;
+
+    height: 27px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0 7px;
+
+    border-radius: 999px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, .10);
+
+    font-size: 15px;
+
+}
+
+
+.message-row.other .reaction {
+
+    left: 8px;
+
+    right: auto;
+
+}
+
+
+/* =========================================
+   ACTION TOOLBAR
+========================================= */
+
+.message-actions {
+
+    position: absolute;
+
+    top: -44px;
+
+    right: 0;
+
+    z-index: 20;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 3px;
+
+    padding: 4px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 999px;
+
+    box-shadow:
+        0 8px 24px rgba(15, 23, 42, .12);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translateY(5px)
+        scale(.96);
+
+    pointer-events: none;
+
+    transition:
+        opacity .18s ease,
+        visibility .18s ease,
+        transform .18s ease;
+}
+
+
+.message-wrapper:hover .message-actions {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    pointer-events: auto;
+
+}
+
+
+.message-actions button {
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: var(--text-light);
+
+    cursor: pointer;
+
+    box-shadow: none;
+
+    transition:
+        background-color .15s ease,
+        color .15s ease,
+        transform .15s ease;
+}
+
+
+.message-actions button svg {
+
+    width: 13px;
+    height: 13px;
+
+}
+
+
+.message-actions button:hover {
+
+    transform: none;
+
+    background: var(--hover-bg);
+
+    color: var(--accent);
+
+}
+
+
+.message-actions .active-action {
+
+    color: var(--accent);
+
+}
+
+
+.message-actions .delete-action:hover {
+
+    background: rgba(220, 38, 38, .09);
+
+    color: #dc2626;
+
+}
+
+
+/* =========================================
+   REACTION PICKER
+========================================= */
+
+.reaction-picker {
+
+    position: absolute;
+
+    left: 0;
+
+    top: calc(100% + 8px);
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 3px;
+
+    padding: 6px 8px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 999px;
+
+    box-shadow:
+        0 10px 28px rgba(15, 23, 42, .14);
+
+    animation:
+        reactionIn .16s ease;
+}
+
+
+.message-row.me .reaction-picker {
+
+    left: auto;
+
+    right: 0;
+
+}
+
+
+.reaction-picker button {
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    border-radius: 50%;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    box-shadow: none;
+
+    transition:
+        transform .15s ease,
+        background-color .15s ease;
+}
+
+
+.reaction-picker button:hover {
+
+    transform: scale(1.2);
+
+    background: var(--hover-bg);
+
+}
+
+
+@keyframes reactionIn {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(-5px) scale(.95);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0) scale(1);
+
+    }
+
+}
+
+
+/* =========================================
+   EDIT
+========================================= */
+
+.edit-container {
+
+    min-width: 220px;
+
+}
+
+
+.edit-input {
+
+    width: 100%;
+
+    min-height: 38px;
+
+    padding: 8px 10px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    background: var(--surface-light);
+
+    color: var(--text);
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+}
+
+
+.edit-input:focus {
+
+    border-color: var(--accent);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(14, 124, 123, .10);
+
+}
+
+
+.edit-buttons {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 7px;
+
+}
+
+
+.edit-buttons button {
+
+    height: 28px;
+
+    padding: 0 10px;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: none;
+
+}
+
+
+.edit-save-btn {
+
+    background: var(--accent);
+
+    border: 1px solid var(--accent);
+
+    color: #ffffff;
+
+}
+
+
+.edit-cancel-btn {
+
+    background: transparent;
+
+    border: 1px solid var(--border);
+
+    color: var(--text-light);
+
+}
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+html[data-theme="dark"] .message-bubble {
+
+    background: #1e2230;
+
+    border-color: #2c3142;
+
+    color: #f1f5f9;
+
+}
+
+
+html[data-theme="dark"] .message-row.me .message-bubble {
+
+    background: #2563eb;
+
+    border-color: #2563eb;
+
+    color: #ffffff;
+
+}
+
+
+html[data-theme="dark"] .message-row.me .message-text {
+
+    color: #ffffff;
+
+}
+
+
+html[data-theme="dark"] .message-row.other .message-text {
+
+    color: #f1f5f9;
+
+}
+
+
+html[data-theme="dark"] .message-actions {
+
+    background: #171922;
+
+    border-color: #2c3142;
+
+}
+
+
+html[data-theme="dark"] .reaction-picker {
+
+    background: #171922;
+
+    border-color: #2c3142;
+
+}
+
+
+html[data-theme="dark"] .reaction {
+
+    background: #171922;
+
+    border-color: #2c3142;
+
+}
+
+
+html[data-theme="dark"] .file-card {
+
+    background: #1e2230;
+
+    border-color: #2c3142;
+
+}
+
+
+html[data-theme="dark"] .edit-input {
+
+    background: #1e2230;
+
+    border-color: #2c3142;
+
+    color: #f1f5f9;
+
+}
+
+
+
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .message-wrapper {
+
+        max-width: 82%;
+
+    }
+
+    .message-row .chat-avatar {
+
+        width: 32px;
+        height: 32px;
+
+    }
+
+    .message-actions {
+
+        top: -40px;
+
+    }
+
+    .message-actions button {
+
+        width: 28px;
+        height: 28px;
+
+    }
+
+}

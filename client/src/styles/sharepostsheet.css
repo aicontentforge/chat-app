@@ -1,0 +1,174 @@
+.share-sheet-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    z-index: 9999;
+}
+
+.share-post-sheet {
+    width: min(100%, 520px);
+
+    max-height: 75vh;
+
+    background: var(--surface);
+
+    border-radius: 20px 20px 0 0;
+
+    padding: 14px 18px 20px;
+
+    box-shadow:
+        0 -10px 40px rgba(0, 0, 0, 0.18);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.share-sheet-handle {
+    width: 42px;
+    height: 4px;
+
+    border-radius: 999px;
+
+    background: var(--border);
+
+    margin: 0 auto 18px;
+}
+
+.share-post-sheet h3 {
+    margin: 0 0 16px;
+
+    color: var(--text);
+
+    font-size: 17px;
+}
+
+.share-copy-link {
+    width: 100%;
+
+    border: 0;
+
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 12px 4px;
+
+    color: var(--text);
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    text-align: left;
+}
+
+.share-copy-link:hover {
+    background: var(--surface-hover);
+    border-radius: 10px;
+}
+
+.share-divider {
+    height: 1px;
+
+    background: var(--border);
+
+    margin: 6px 0;
+}
+
+.share-contacts {
+    overflow-y: auto;
+
+    min-height: 80px;
+
+    max-height: 40vh;
+}
+
+.share-contact {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 4px;
+
+    cursor: pointer;
+}
+
+.share-contact-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: var(--text);
+
+    font-size: 14px;
+}
+
+.share-contact-avatar {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--primary, #6366f1);
+
+    color: white;
+
+    font-weight: 700;
+}
+
+.share-contact input {
+    width: 20px;
+    height: 20px;
+}
+
+.share-no-contacts {
+    padding: 30px 10px;
+
+    text-align: center;
+
+    color: var(--text-light);
+
+    font-size: 13px;
+}
+
+.share-submit-button {
+    width: 100%;
+
+    margin-top: 14px;
+
+    padding: 12px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    background: var(--primary, #6366f1);
+
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.share-submit-button:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+}

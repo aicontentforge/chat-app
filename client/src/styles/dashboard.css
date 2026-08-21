@@ -1,0 +1,135 @@
+.dashboard{
+    padding:34px;
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+    overflow-y:auto;
+    height:100%;
+    background:#f6f8fc;
+}
+
+.welcome-card{
+    background:linear-gradient(135deg,#4f7cff,#7b61ff);
+    color:white;
+    padding:38px;
+    border-radius:28px;
+    box-shadow:0 20px 45px rgba(79,124,255,.25);
+    position:relative;
+    overflow:hidden;
+}
+
+.welcome-card::after{
+    content:"";
+    position:absolute;
+    width:260px;
+    height:260px;
+    right:-80px;
+    top:-80px;
+    border-radius:50%;
+    background:rgba(255,255,255,.12);
+}
+
+.welcome-card h1{
+    font-size:36px;
+    line-height:1.2;
+    margin-bottom:15px;
+    position:relative;
+    z-index:2;
+}
+
+.welcome-card p{
+    font-size:15px;
+    opacity:.9;
+    max-width:520px;
+    position:relative;
+    z-index:2;
+}
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.card{
+    background:white;
+    border-radius:24px;
+    padding:28px;
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+    transition:.3s;
+    cursor:pointer;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 20px 45px rgba(79,124,255,.18);
+}
+
+.card h3{
+    font-size:15px;
+    color:#64748b;
+    margin-bottom:18px;
+    font-weight:600;
+}
+
+.card h1{
+    font-size:42px;
+    color:#2563eb;
+}
+
+.recent-section{
+    background:white;
+    border-radius:28px;
+    padding:28px;
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+}
+
+.recent-section h2{
+    margin-bottom:22px;
+    font-size:24px;
+}
+
+.recent-chat{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:18px;
+    border-radius:18px;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.recent-chat:hover{
+    background:#f8fbff;
+}
+
+.recent-chat img{
+    width:56px;
+    height:56px;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.recent-chat b{
+    display:block;
+    margin-bottom:5px;
+    font-size:16px;
+}
+
+.recent-chat p{
+    color:#64748b;
+    font-size:14px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width:450px;
+}
+
+.dashboard::-webkit-scrollbar{
+    width:8px;
+}
+
+.dashboard::-webkit-scrollbar-thumb{
+    background:#d8dfec;
+    border-radius:30px;
+}

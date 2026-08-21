@@ -1,0 +1,466 @@
+/* =========================================
+   GLOBAL POST DETAIL
+========================================= */
+
+.global-post-detail-page {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: var(--background);
+
+    overflow: hidden;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.global-detail-header {
+    height: 72px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 0 24px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.global-detail-header h2 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 19px;
+}
+
+.global-detail-header p {
+    margin: 3px 0 0;
+
+    color: var(--text-light);
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   BACK
+========================================= */
+
+.global-detail-back {
+    width: 38px;
+    height: 38px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 50%;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.global-detail-content {
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    padding: 24px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   ORIGINAL POST
+========================================= */
+
+.global-original-post {
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    padding: 18px;
+
+    margin-bottom: 20px;
+}
+
+.global-post-author {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+}
+
+.global-post-avatar {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+}
+
+.global-post-name {
+    color: var(--text);
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+.global-post-meta {
+    margin-top: 3px;
+
+    color: var(--text-light);
+
+    font-size: 11px;
+}
+
+.global-post-text {
+    margin-top: 13px;
+
+    color: var(--text);
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    white-space: pre-wrap;
+}
+
+.global-post-image {
+    width: 100%;
+
+    max-height: 420px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    margin-top: 14px;
+}
+
+
+/* =========================================
+   MENTIONS
+========================================= */
+
+.global-mention {
+    color: var(--accent);
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   COMMENTS
+========================================= */
+
+.global-comments {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+.global-comments-title {
+    color: var(--text-light);
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+.global-comment {
+    display: flex;
+
+    gap: 11px;
+}
+
+.global-comment-avatar {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+}
+
+.global-comment-body {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.global-comment-top {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.global-comment-top strong {
+    color: var(--text);
+
+    font-size: 13px;
+}
+
+.global-comment-top span {
+    color: var(--text-light);
+
+    font-size: 11px;
+}
+
+.global-comment-text {
+    margin-top: 4px;
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    line-height: 1.45;
+}
+
+.global-reply-button {
+    padding: 4px 0;
+
+    margin-top: 4px;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--text-light);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.global-reply-button:hover {
+    color: var(--accent);
+}
+
+
+/* =========================================
+   COMPOSER
+========================================= */
+
+.global-comment-composer-wrapper {
+    position: relative;
+
+    flex-shrink: 0;
+
+    padding: 12px 24px;
+
+    background: var(--surface);
+
+    border-top: 1px solid var(--border);
+}
+
+.global-comment-composer {
+    width: 100%;
+
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.global-composer-avatar {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+}
+
+.global-comment-composer input {
+    flex: 1;
+
+    min-width: 0;
+
+    height: 42px;
+
+    padding: 0 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 22px;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    outline: none;
+}
+
+.global-comment-composer input:focus {
+    border-color: var(--accent);
+}
+
+.global-comment-send {
+    width: 40px;
+    height: 40px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: var(--accent);
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.global-comment-send:disabled {
+    opacity: .45;
+
+    cursor: default;
+}
+
+
+/* =========================================
+   MENTION DROPDOWN
+========================================= */
+
+.global-mention-dropdown {
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 72px;
+
+    transform: translateX(-50%);
+
+    width: min(500px, calc(100% - 48px));
+
+    max-height: 240px;
+
+    overflow-y: auto;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, .14);
+
+    z-index: 20;
+}
+
+.global-mention-option {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 12px;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--text);
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.global-mention-option:hover {
+    background: var(--background);
+}
+
+.global-mention-option img {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+}
+
+.global-mention-option div {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.global-mention-option strong {
+    font-size: 13px;
+}
+
+.global-mention-option span {
+    color: var(--text-light);
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   STATES
+========================================= */
+
+.global-detail-loading,
+.global-detail-not-found {
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: var(--text-light);
+}

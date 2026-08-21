@@ -1,0 +1,159 @@
+.group-page{
+
+    min-height:100vh;
+
+    background:#eef2f8;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.group-card{
+
+    width:700px;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:35px;
+
+    box-shadow:0 12px 40px rgba(0,0,0,.12);
+
+}
+
+.group-card h2{
+
+    text-align:center;
+
+}
+
+.group-avatar{
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    display:block;
+
+    margin:auto;
+
+    margin-bottom:15px;
+
+}
+
+.group-count{
+
+    text-align:center;
+
+    color:#666;
+
+    margin-bottom:25px;
+
+}
+
+.group-members{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    margin-top:25px;
+
+}
+
+.member-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    background:#f7f8fc;
+
+}
+
+.member-actions{
+
+    display:flex;
+
+    gap:8px;
+
+}
+
+.member-actions button{
+
+    border:none;
+
+    background:white;
+
+    padding:8px 10px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+.group-buttons{
+
+    margin-top:25px;
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.group-buttons button{
+
+    flex:1;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:white;
+
+    cursor:pointer;
+
+}
+
+.leave-btn{
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#dc2626;
+
+    color:white;
+
+    cursor:pointer;
+
+}

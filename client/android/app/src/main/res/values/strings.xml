@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ChatSphere</string>
+    <string name="title_activity_main">ChatSphere</string>
+    <string name="package_name">com.chatsphere.app</string>
+    <string name="custom_url_scheme">com.chatsphere.app</string>
+</resources>
