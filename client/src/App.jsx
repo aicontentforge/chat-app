@@ -11,6 +11,7 @@ import ProfileSetup from "./pages/ProfileSetup";
 import GlobalChat from "./pages/GlobalChat";
 import GlobalPostDetail from "./pages/GlobalPostDetail";
 import TopSupporters from "./pages/TopSupporters";
+import DonatePage from "./pages/DonatePage";
 
 function App() {
 
@@ -108,6 +109,15 @@ function App() {
     element={
         user
             ? <TopSupporters />
+            : <Navigate to="/login" />
+    }
+/>
+
+<Route
+    path="/donate"
+    element={
+        user
+            ? <DonatePage />
             : <Navigate to="/login" />
     }
 />

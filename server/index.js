@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const userRoutes = require("./routes/users");
 const audioUploadRoutes = require("./routes/audioUpload");
 const messageRoutes = require("./routes/messages");
@@ -14,7 +16,6 @@ const db = require("./database");
 const path = require("path");
 const globalChatRoutes = require("./routes/globalChat");
 const donationRoutes = require("./routes/donations");
-require("dotenv").config();
 
 db.run(`
 ALTER TABLE messages

@@ -199,7 +199,7 @@ function Dashboard({
                             </div>
 
                             <strong>
-                                $
+                                ₹
                                 {(
                                     donors[0].totalDonated /
                                     100
@@ -252,7 +252,7 @@ function Dashboard({
                                         </div>
 
                                         <strong>
-                                            $
+                                            ₹
                                             {(
                                                 donor.totalDonated /
                                                 100
@@ -299,7 +299,7 @@ function Dashboard({
                             </strong>
 
                             <span>
-                                $
+                                ₹
                                 {(
                                     myDonor.totalDonated /
                                     100
@@ -311,6 +311,13 @@ function Dashboard({
                     </div>
 
                 )}
+
+                <button
+                    className="donate-cta-btn"
+                    onClick={() => navigate("/donate")}
+                >
+                    💜 Donate
+                </button>
 
             </div>
 
