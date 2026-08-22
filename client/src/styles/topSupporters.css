@@ -30,6 +30,10 @@
     color: #666;
 }
 
+.donate-cta-btn {
+    margin-top: 18px;
+}
+
 .top-donor-card {
     max-width: 500px;
     margin: 0 auto 35px;
@@ -51,9 +55,10 @@
 }
 
 .top-donor-avatar {
-    width: 90px;
-    height: 90px;
+    width: 76px;
+    height: 76px;
     border-radius: 50%;
+    object-fit: cover;
     margin-bottom: 12px;
 }
 
@@ -117,9 +122,11 @@
 }
 
 .supporter-avatar {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
 .supporter-info {

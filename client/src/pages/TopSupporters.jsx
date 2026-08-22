@@ -218,6 +218,13 @@ function TopSupporters() {
                     The people supporting ChatSphere
                 </p>
 
+                <button
+                    className="donate-cta-btn"
+                    onClick={() => navigate("/donate")}
+                >
+                    💜 Donate
+                </button>
+
             </div>
 
 

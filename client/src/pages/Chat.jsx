@@ -61,7 +61,9 @@ function Chat() {
     const [search, setSearch] = useState("");
     const [lastSeen, setLastSeen] = useState(null);
     const [groups, setGroups] = useState([]);
-    const [showDashboard, setShowDashboard] = useState(true);
+    const [showDashboard, setShowDashboard] = useState(
+        () => !localStorage.getItem("selectedUser")
+    );
     const [showNewChat, setShowNewChat] = useState(false);
     const [showMoreMenu, setShowMoreMenu] = useState(false);
     const [showInfoPanel, setShowInfoPanel] = useState(false);
@@ -1346,6 +1348,16 @@ if (!user) {
     🌐 Global Chat
 </button>
 
+        <button
+    className={`dashboard-btn${showDashboard ? " active" : ""}`}
+    onClick={() => {
+        setShowDashboard(true);
+        setSidebarOpen(false);
+    }}
+>
+    🏠 Dashboard
+</button>
+
     </div>
 
     <div className="sidebar-search-box">
@@ -1365,7 +1377,7 @@ if (!user) {
 
     currentUser={user.username}
 
-    selectedUser={selectedUser}
+    selectedUser={showDashboard ? null : selectedUser}
 
     onlineUsers={onlineUsers}
 
@@ -1404,7 +1416,7 @@ if (!user) {
 >
                 <Header
                     user={user}
-                    selectedUser={selectedUser}
+                    selectedUser={showDashboard ? null : selectedUser}
                     onlineUsers={onlineUsers}
                     theme={theme}
                     toggleTheme={toggleTheme}

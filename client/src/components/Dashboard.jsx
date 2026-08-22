@@ -312,13 +312,6 @@ function Dashboard({
 
                 )}
 
-                <button
-                    className="donate-cta-btn"
-                    onClick={() => navigate("/donate")}
-                >
-                    💜 Donate
-                </button>
-
             </div>
 
 
