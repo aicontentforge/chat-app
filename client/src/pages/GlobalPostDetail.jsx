@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../services/api";
+import DonorBadge from "../components/DonorBadge";
 import "../styles/globalpostdetail.css";
 
 function flagFromCountryCode(code) {
@@ -476,7 +477,7 @@ function GlobalPostDetail() {
                                 {post.author?.displayName ||
                                     post.author?.username}
                                     <DonorBadge
-        username={post.author}
+        username={post.author?.username}
     />
                             </div>
 

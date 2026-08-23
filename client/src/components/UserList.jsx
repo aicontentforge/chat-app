@@ -1,4 +1,5 @@
 import "../styles/sidebar.css";
+import DonorBadge from "./DonorBadge";
 
 function getInitials(name = "") {
     return name
@@ -286,6 +287,7 @@ function UserList({
 
                                             <div className="chat-name">
                                                 {otherUser}
+                                                <DonorBadge username={otherUser} />
                                             </div>
 
                                             <div className="chat-message">

@@ -6,7 +6,12 @@ function ChatBox({
     messages,
     currentUser,
     onReply,
-    onStar
+    onStar,
+    onForward,
+    selectMode = false,
+    selectedMsgIds = [],
+    onEnterSelect,
+    onToggleSelect
 }) {
 
     const bottomRef = useRef(null);
@@ -75,6 +80,11 @@ function ChatBox({
                                     currentUser={currentUser}
                                     onStar={onStar}
                                     onReply={onReply}
+                                    onForward={onForward}
+                                    selectMode={selectMode}
+                                    isSelected={selectedMsgIds.includes(msg.id)}
+                                    onEnterSelect={onEnterSelect}
+                                    onToggleSelect={onToggleSelect}
                                     messages={messages}
                                 />
 

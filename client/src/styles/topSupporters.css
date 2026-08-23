@@ -6,13 +6,35 @@
 }
 
 .back-button {
-    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #e2e8f0;
     background: white;
-    padding: 10px 16px;
-    border-radius: 10px;
+    color: #334155;
+    padding: 11px 20px;
+    border-radius: 14px;
     cursor: pointer;
     font-weight: 600;
+    font-size: 14px;
     margin-bottom: 25px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, .06);
+    transition: .2s;
+}
+
+.back-button:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, .1);
+    transform: translateY(-1px);
+}
+
+.back-button-arrow {
+    display: inline-block;
+    transition: transform .2s ease;
+}
+
+.back-button:hover .back-button-arrow {
+    transform: translateX(-3px);
 }
 
 .supporters-header {
@@ -30,8 +52,15 @@
     color: #666;
 }
 
+.donate-cta-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 40px;
+}
+
 .donate-cta-btn {
-    margin-top: 18px;
+    padding: 15px 34px;
+    font-size: 15px;
 }
 
 .top-donor-card {

@@ -367,11 +367,7 @@ function InputArea({
                 <div className="reply-box">
 
                     <b>
-
-                        {replyMessage.forward
-                            ? "Forward message"
-                            : `Replying to ${replyMessage.sender}`}
-
+                        Replying to {replyMessage.sender}
                     </b>
 
                     <br />

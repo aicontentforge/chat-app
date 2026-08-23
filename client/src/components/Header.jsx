@@ -1,12 +1,16 @@
+import { useState } from "react";
+
 import {
     FaPhone,
     FaVideo,
     FaMoon,
     FaSun,
     FaEllipsisVertical,
-    FaUser,
-    FaArrowRightFromBracket
+    FaGear
 } from "react-icons/fa6";
+
+import SettingsMenu from "./SettingsMenu";
+import DonorBadge from "./DonorBadge";
 
 import "../styles/header.css";
 
@@ -27,6 +31,12 @@ function Header({
     const online =
         selectedUser &&
         onlineUsers.includes(selectedUser);
+
+    const [showSettings, setShowSettings] = useState(false);
+
+    const isGroupChat =
+        !!selectedUser &&
+        selectedUser.startsWith("group_");
 
     return (
         <header className="header">
@@ -52,6 +62,9 @@ function Header({
 
                     <h2>
                         {selectedUser || "Dashboard"}
+                        {selectedUser && !isGroupChat && (
+                            <DonorBadge username={selectedUser} />
+                        )}
                     </h2>
 
                     {selectedUser && (
@@ -120,23 +133,25 @@ function Header({
         </button>
     </div>
 
-    <button
-        type="button"
-        className="header-profile-btn"
-        onClick={() => navigate("/profile")}
-    >
-        <FaUser />
-        <span>Profile</span>
-    </button>
+    <div className="header-more-wrapper">
+        <button
+            type="button"
+            className="header-icon-btn settings-btn"
+            title="Settings"
+            onClick={() => setShowSettings(prev => !prev)}
+        >
+            <FaGear />
+        </button>
 
-    <button
-        type="button"
-        className="header-logout-btn"
-        onClick={logout}
-    >
-        <FaArrowRightFromBracket />
-        <span>Logout</span>
-    </button>
+        {showSettings && (
+            <SettingsMenu
+                user={user}
+                navigate={navigate}
+                logout={logout}
+                onClose={() => setShowSettings(false)}
+            />
+        )}
+    </div>
 
 </div>
 

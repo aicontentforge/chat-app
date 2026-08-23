@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { API_ORIGIN } from "../config";
 import ImageUpload from "../components/ImageUpload";
+import DonorBadge from "../components/DonorBadge";
 import "../styles/profile.css";
 import LocationPicker from "../components/LocationPicker";
 
@@ -173,7 +174,10 @@ const toggleCategory = (category) => {
 
         />
 
-        <h2>{profile.displayName || currentUser.username}</h2>
+        <h2>
+            {profile.displayName || currentUser.username}
+            <DonorBadge username={username} />
+        </h2>
 
         <p className="profile-username">
             @{currentUser.username}

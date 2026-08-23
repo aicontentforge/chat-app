@@ -35,25 +35,6 @@ function ProfileModal({
     {profile.displayName || profile.username}
     <DonorBadge username={profile.username} />
 
-    {profile.isTopDonor && (
-        <span className="donor-crown">
-            👑
-        </span>
-    )}
-
-    {profile.badgeNumber && (
-        <span className="donor-number-badge">
-            #{profile.badgeNumber}
-        </span>
-    )}
-
-    {!profile.badgeNumber &&
-        profile.donorBadgeActive && (
-            <span className="donor-badge">
-                💛 Donor
-            </span>
-        )}
-
 </h2>
 
                 <p>{profile.bio}</p>

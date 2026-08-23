@@ -79,6 +79,15 @@ function TopSupporters() {
     function getBadge(supporter) {
 
         /*
+         * An explicit "false" hides the badge everywhere,
+         * regardless of rank.
+         */
+        if (supporter.donorBadgeActive === false) {
+            return null;
+        }
+
+
+        /*
          * Top 100
          */
         if (supporter.badgeNumber) {
@@ -122,7 +131,7 @@ function TopSupporters() {
                     className="back-button"
                     onClick={() => navigate("/chat")}
                 >
-                    ← Back
+                    <span className="back-button-arrow">←</span> Back
                 </button>
 
                 <div className="supporters-loading">
@@ -146,7 +155,7 @@ function TopSupporters() {
                     className="back-button"
                     onClick={() => navigate("/chat")}
                 >
-                    ← Back
+                    <span className="back-button-arrow">←</span> Back
                 </button>
 
                 <div className="supporters-error">
@@ -204,7 +213,7 @@ function TopSupporters() {
                 className="back-button"
                 onClick={() => navigate("/chat")}
             >
-                ← Back to Dashboard
+                <span className="back-button-arrow">←</span> Back to Dashboard
             </button>
 
 
@@ -217,13 +226,6 @@ function TopSupporters() {
                 <p>
                     The people supporting ChatSphere
                 </p>
-
-                <button
-                    className="donate-cta-btn"
-                    onClick={() => navigate("/donate")}
-                >
-                    💜 Donate
-                </button>
 
             </div>
 
@@ -244,6 +246,17 @@ function TopSupporters() {
                         Be the first person to support
                         ChatSphere.
                     </p>
+
+                    <div className="donate-cta-wrapper">
+
+                        <button
+                            className="donate-cta-btn"
+                            onClick={() => navigate("/donate")}
+                        >
+                            💜 Donate
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -309,6 +322,18 @@ function TopSupporters() {
                         </div>
 
                     )}
+
+
+                    <div className="donate-cta-wrapper">
+
+                        <button
+                            className="donate-cta-btn"
+                            onClick={() => navigate("/donate")}
+                        >
+                            💜 Donate
+                        </button>
+
+                    </div>
 
 
                     {/* ========================= */}

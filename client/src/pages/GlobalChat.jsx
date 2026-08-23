@@ -8,6 +8,7 @@ import "../styles/globalchat.css";
 
 import SharePostSheet from "../components/SharePostSheet";
 import UserList from "../components/UserList";
+import DonorBadge from "../components/DonorBadge";
 
 function relativeTime(date) {
     const diff = Date.now() - new Date(date).getTime();
@@ -1118,6 +1119,12 @@ function GlobalChat() {
                                                     post.author?.displayName ||
                                                     post.author?.username
                                                 }
+
+                                                {post.author?.username && (
+                                                    <DonorBadge
+                                                        username={post.author.username}
+                                                    />
+                                                )}
 
                                             </div>
 

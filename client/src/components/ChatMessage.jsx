@@ -13,6 +13,7 @@ import {
 
 import socket from "../services/socket";
 import { API_ORIGIN } from "../config";
+import DonorBadge from "./DonorBadge";
 
 import "../styles/chatmessage.css";
 
@@ -20,7 +21,12 @@ function ChatMessage({
     message,
     currentUser,
     onReply,
-    onStar
+    onStar,
+    onForward,
+    selectMode = false,
+    isSelected = false,
+    onEnterSelect,
+    onToggleSelect
 }) {
 
     const mine = message.sender === currentUser;
@@ -89,14 +95,24 @@ function ChatMessage({
 
     const handleForward = () => {
 
-        if (onReply) {
-
-            onReply({
-                ...message,
-                forward: true
-            });
-
+        if (onForward) {
+            onForward(message);
         }
+    };
+
+
+    /* =========================
+       SELECT
+    ========================= */
+
+    const handleSelectClick = () => {
+
+        if (selectMode) {
+            onToggleSelect?.(message.id);
+        } else {
+            onEnterSelect?.(message.id);
+        }
+
     };
 
 
@@ -149,8 +165,31 @@ function ChatMessage({
         <div
             className={`message-row ${
                 mine ? "me" : "other"
+            } ${selectMode ? "selectable" : ""} ${
+                isSelected ? "selected" : ""
             }`}
+            onClick={() => {
+                if (selectMode) {
+                    onToggleSelect?.(message.id);
+                }
+            }}
         >
+
+            {/* =========================
+                SELECT CHECKBOX
+            ========================= */}
+
+            {selectMode && (
+
+                <span
+                    className={`select-checkbox ${
+                        isSelected ? "checked" : ""
+                    }`}
+                >
+                    {isSelected && <FaCheck />}
+                </span>
+
+            )}
 
             {/* =========================
                 AVATAR - OTHER
@@ -180,6 +219,7 @@ function ChatMessage({
 
                     <div className="sender-name">
                         {message.sender}
+                        <DonorBadge username={message.sender} />
                     </div>
 
                 )}
@@ -202,6 +242,7 @@ function ChatMessage({
                         }`}
 
                         onDoubleClick={() =>
+                            !selectMode &&
                             setShowReactions(
                                 prev => !prev
                             )
@@ -210,6 +251,11 @@ function ChatMessage({
                         onContextMenu={(e) => {
 
                             e.preventDefault();
+
+                            if (selectMode) {
+                                onToggleSelect?.(message.id);
+                                return;
+                            }
 
                             handleReply();
 
@@ -439,6 +485,8 @@ function ChatMessage({
                         ACTION TOOLBAR
                     ========================= */}
 
+                    {!selectMode && (
+
                     <div className="message-actions">
 
 
@@ -539,6 +587,21 @@ function ChatMessage({
                         </button>
 
 
+                        {/* SELECT */}
+
+                        <button
+                            type="button"
+
+                            title="Select"
+
+                            onClick={handleSelectClick}
+                        >
+
+                            <FaCheck />
+
+                        </button>
+
+
                         {/* DELETE */}
 
                         {mine && (
@@ -560,6 +623,8 @@ function ChatMessage({
                         )}
 
                     </div>
+
+                    )}
 
 
                     {/* =========================

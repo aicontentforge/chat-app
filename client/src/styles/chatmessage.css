@@ -20,6 +20,77 @@
 }
 
 
+.message-row.selectable {
+
+    cursor: pointer;
+
+}
+
+
+.message-row.selectable .message-bubble {
+
+    transition:
+        background-color .15s ease,
+        box-shadow .15s ease;
+
+}
+
+
+.message-row.selected .message-bubble {
+
+    box-shadow:
+        0 0 0 2px var(--accent, #2563eb);
+
+}
+
+
+.select-checkbox {
+
+    width: 22px;
+    height: 22px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 2px solid #cbd5e1;
+
+    background: var(--surface, #ffffff);
+
+    color: transparent;
+
+    font-size: 11px;
+
+    margin-bottom: 4px;
+
+    transition: .15s;
+}
+
+
+.select-checkbox.checked {
+
+    background: var(--accent, #2563eb);
+
+    border-color: var(--accent, #2563eb);
+
+    color: #ffffff;
+
+}
+
+
+.select-checkbox svg {
+
+    width: 11px;
+    height: 11px;
+
+}
+
+
 .message-row.me {
     justify-content: flex-end;
 }

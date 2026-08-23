@@ -33,6 +33,8 @@ import StarredMessages from "../components/StarredMessages";
 import WallpaperModal from "../components/WallpaperModal";
 import CallScreen from "../components/CallScreen";
 import AddPeopleSheet from "../components/AddPeopleSheet";
+import ForwardModal from "../components/ForwardModal";
+import SelectionBar from "../components/SelectionBar";
 
 
 function Chat() {
@@ -61,6 +63,9 @@ function Chat() {
     const [search, setSearch] = useState("");
     const [lastSeen, setLastSeen] = useState(null);
     const [groups, setGroups] = useState([]);
+    const [selectMode, setSelectMode] = useState(false);
+    const [selectedMsgIds, setSelectedMsgIds] = useState([]);
+    const [forwardMessages, setForwardMessages] = useState(null);
     const [showDashboard, setShowDashboard] = useState(
         () => !localStorage.getItem("selectedUser")
     );
@@ -657,10 +662,7 @@ useEffect(() => {
             file: "",
             fileName: "",
 
-            replyTo:
-                replyMessage?.forward
-                    ? null
-                    : replyMessage?.id || null
+            replyTo: replyMessage?.id || null
 
         });
 
@@ -688,26 +690,12 @@ useEffect(() => {
 
         translationEnabled,
 
-        image: replyMessage?.forward
-            ? replyMessage.image || ""
-            : "",
+        image: "",
+        audio: "",
+        file: "",
+        fileName: "",
 
-        audio: replyMessage?.forward
-            ? replyMessage.audio || ""
-            : "",
-
-        file: replyMessage?.forward
-            ? replyMessage.file || ""
-            : "",
-
-        fileName: replyMessage?.forward
-            ? replyMessage.fileName || ""
-            : "",
-
-        replyTo:
-            replyMessage?.forward
-                ? null
-                : replyMessage?.id || null
+        replyTo: replyMessage?.id || null
 
     });
 
@@ -879,6 +867,152 @@ const handleStar = (id) => {
     });
 
 };
+
+
+/* =========================
+   MULTI-SELECT MESSAGES
+========================= */
+
+const enterSelectMode = (id) => {
+    setSelectMode(true);
+    setSelectedMsgIds([id]);
+};
+
+const toggleMsgSelect = (id) => {
+    setSelectedMsgIds((prev) =>
+        prev.includes(id)
+            ? prev.filter((item) => item !== id)
+            : [...prev, id]
+    );
+};
+
+const exitSelectMode = () => {
+    setSelectMode(false);
+    setSelectedMsgIds([]);
+};
+
+const getSelectedMessages = () =>
+    messages.filter((m) => selectedMsgIds.includes(m.id));
+
+const canBulkDelete =
+    selectedMsgIds.length > 0 &&
+    getSelectedMessages().every(
+        (m) => m.sender === user.username
+    );
+
+const bulkForward = () => {
+    const picked = getSelectedMessages();
+    if (picked.length === 0) return;
+    setForwardMessages(picked);
+};
+
+const bulkPin = () => {
+    selectedMsgIds.forEach((id) => {
+        socket.emit("pin_message", { id, pinned: true });
+    });
+    exitSelectMode();
+};
+
+const bulkReact = (emoji) => {
+    selectedMsgIds.forEach((id) => {
+        socket.emit("react_message", { id, reaction: emoji });
+    });
+    exitSelectMode();
+};
+
+const bulkReply = () => {
+    const picked = getSelectedMessages();
+    if (picked.length === 0) return;
+
+    const combinedText = picked
+        .map((m) =>
+            m.message ||
+            (m.image && "📷 Photo") ||
+            (m.audio && "🎤 Voice message") ||
+            (m.file && "📎 File") ||
+            ""
+        )
+        .filter(Boolean)
+        .join("  •  ");
+
+    setReplyMessage({
+        id: null,
+        sender: `${picked.length} messages`,
+        message: combinedText
+    });
+
+    exitSelectMode();
+};
+
+const bulkDelete = () => {
+    selectedMsgIds.forEach((id) => {
+        socket.emit("delete_message", id);
+    });
+    exitSelectMode();
+};
+
+
+/* =========================
+   FORWARD
+========================= */
+
+const sendForward = (targets) => {
+
+    if (!forwardMessages || forwardMessages.length === 0) return;
+
+    targets.forEach((target) => {
+
+        const isGroup = target.startsWith("group_");
+        const groupId = isGroup
+            ? target.replace("group_", "")
+            : null;
+
+        forwardMessages.forEach((msg) => {
+
+            const payload = {
+                sender: user.username,
+                message: msg.message || "",
+                image: msg.image || "",
+                audio: msg.audio || "",
+                file: msg.file || "",
+                fileName: msg.fileName || "",
+                replyTo: null
+            };
+
+            if (isGroup) {
+
+                socket.emit("send_group_message", {
+                    ...payload,
+                    groupId
+                });
+
+            } else {
+
+                socket.emit("send_message", {
+                    ...payload,
+                    receiver: target
+                });
+
+            }
+
+        });
+
+    });
+
+    setForwardMessages(null);
+    exitSelectMode();
+
+};
+
+
+/*
+ Leaving the current chat should also leave any
+ in-progress selection behind.
+*/
+useEffect(() => {
+    setSelectMode(false);
+    setSelectedMsgIds([]);
+}, [selectedUser]);
 
 const handleAddPeople = (usernames) => {
 
@@ -1430,6 +1564,22 @@ if (!user) {
 
                 <>
     {!showDashboard && (
+
+        selectMode ? (
+
+            <SelectionBar
+                count={selectedMsgIds.length}
+                canDelete={canBulkDelete}
+                onForward={bulkForward}
+                onPin={bulkPin}
+                onReply={bulkReply}
+                onReact={bulkReact}
+                onDelete={bulkDelete}
+                onCancel={exitSelectMode}
+            />
+
+        ) : (
+
         <div className="chat-search-bar">
 
             <input
@@ -1441,6 +1591,7 @@ if (!user) {
             />
 
         </div>
+        )
     )}
 
     <div className="messages">
@@ -1452,6 +1603,11 @@ if (!user) {
                             conversations={conversations}
                             groups={groups}
                             onlineUsers={onlineUsers}
+                            onOpenChat={(username) => {
+                                localStorage.setItem("selectedUser", username);
+                                setSelectedUser(username);
+                                setShowDashboard(false);
+                            }}
                         />
 
                     ) : (
@@ -1461,6 +1617,11 @@ if (!user) {
                             currentUser={user.username}
                             onReply={setReplyMessage}
                             onStar={handleStar}
+                            onForward={(msg) => setForwardMessages([msg])}
+                            selectMode={selectMode}
+                            selectedMsgIds={selectedMsgIds}
+                            onEnterSelect={enterSelectMode}
+                            onToggleSelect={toggleMsgSelect}
                         />
 
                     )}
@@ -1547,6 +1708,16 @@ if (!user) {
 
                 }}
 
+            />
+
+            <ForwardModal
+                open={!!forwardMessages}
+                messages={forwardMessages || []}
+                conversations={conversations}
+                groups={groups}
+                currentUser={user.username}
+                onClose={() => setForwardMessages(null)}
+                onForward={sendForward}
             />
 
             <MoreMenu

@@ -51,6 +51,17 @@ function DonorBadge({ username }) {
 
 
     /*
+     * The on/off toggle in Settings hides the badge
+     * everywhere, regardless of rank. Only an explicit
+     * "false" hides it - undefined/true stays visible so
+     * existing donors aren't affected until they toggle it.
+     */
+    if (donor.donorBadgeActive === false) {
+        return null;
+    }
+
+
+    /*
      * #1 gets the special crown.
      */
     if (donor.rank === 1) {

@@ -9,7 +9,8 @@ function Dashboard({
     user,
     conversations,
     groups,
-    onlineUsers
+    onlineUsers,
+    onOpenChat
 }) {
 
     const navigate = useNavigate();
@@ -76,60 +77,6 @@ function Dashboard({
 
         <div className="dashboard">
 
-            <div className="welcome-card">
-
-                <h1>
-                    👋 Welcome,
-                    <br />
-                    {user.displayName ||
-                        user.username}
-                </h1>
-
-                <p>
-                    Select a chat from the left sidebar
-                    or create a new conversation.
-                </p>
-
-            </div>
-
-
-            <div className="dashboard-grid">
-
-                <div className="card">
-
-                    <h3>Total Chats</h3>
-
-                    <h1>
-                        {conversations.length}
-                    </h1>
-
-                </div>
-
-
-                <div className="card">
-
-                    <h3>Groups</h3>
-
-                    <h1>
-                        {groups.length}
-                    </h1>
-
-                </div>
-
-
-                <div className="card">
-
-                    <h3>Online Users</h3>
-
-                    <h1>
-                        {onlineUsers.length}
-                    </h1>
-
-                </div>
-
-            </div>
-
-
             {/* ================= DONORS ================= */}
 
             <div className="supporters-card">
@@ -171,9 +118,11 @@ function Dashboard({
                         <div
                             className="top-donor-feature"
                             onClick={() =>
-                                navigate(
-                                    `/profile/${donors[0].username}`
-                                )
+                                onOpenChat
+                                    ? onOpenChat(donors[0].username)
+                                    : navigate(
+                                        `/profile/${donors[0].username}`
+                                    )
                             }
                         >
 
@@ -192,6 +141,7 @@ function Dashboard({
                             <h2>
                                 {donors[0].displayName ||
                                     donors[0].username}
+                                <DonorBadge username={donors[0].username} />
                             </h2>
 
                             <div className="top-donor-rank">
@@ -205,6 +155,10 @@ function Dashboard({
                                     100
                                 ).toFixed(2)}
                             </strong>
+
+                            <span className="top-donor-cta">
+                                Tap to chat →
+                            </span>
 
                         </div>
 
@@ -221,6 +175,13 @@ function Dashboard({
                                         className="supporter-row"
                                         key={
                                             donor.username
+                                        }
+                                        onClick={() =>
+                                            onOpenChat
+                                                ? onOpenChat(donor.username)
+                                                : navigate(
+                                                    `/profile/${donor.username}`
+                                                )
                                         }
                                     >
 
@@ -241,6 +202,7 @@ function Dashboard({
                                             <strong>
                                                 {donor.displayName ||
                                                     donor.username}
+                                                <DonorBadge username={donor.username} />
                                             </strong>
 
                                             {donor.badgeNumber && (
@@ -315,6 +277,43 @@ function Dashboard({
             </div>
 
 
+            <div className="dashboard-grid">
+
+                <div className="card">
+
+                    <h3>Total Chats</h3>
+
+                    <h1>
+                        {conversations.length}
+                    </h1>
+
+                </div>
+
+
+                <div className="card">
+
+                    <h3>Groups</h3>
+
+                    <h1>
+                        {groups.length}
+                    </h1>
+
+                </div>
+
+
+                <div className="card">
+
+                    <h3>Online Users</h3>
+
+                    <h1>
+                        {onlineUsers.length}
+                    </h1>
+
+                </div>
+
+            </div>
+
+
             {/* RECENT CHATS */}
 
             <div className="recent-section">
@@ -344,8 +343,10 @@ function Dashboard({
                                 <div
                                     className="recent-chat"
                                     key={other}
+                                    onClick={() =>
+                                        onOpenChat && onOpenChat(other)
+                                    }
                                 >
-
                                     <img
                                         src={`https://api.dicebear.com/9.x/initials/svg?seed=${other}`}
                                         alt=""
