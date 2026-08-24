@@ -510,13 +510,16 @@ checkBlocked();
 
 useEffect(() => {
 
-    const chatMain = chatMainRef.current;
+    // Listens on the whole layout (works whether the sidebar,
+    // backdrop, or chat area is what the finger actually touches)
+    const layoutEl = chatMainRef.current;
 
-    if (!chatMain) return;
+    if (!layoutEl) return;
 
 
     let touchStartX = 0;
     let touchStartY = 0;
+    let startedFromEdge = false;
 
 
     const handleTouchStart = (e) => {
@@ -527,6 +530,11 @@ useEffect(() => {
 
         touchStartX = touch.clientX;
         touchStartY = touch.clientY;
+
+        // Only treat a touch that begins near the left edge of the
+        // screen as a potential "open sidebar" gesture, so normal
+        // swipes inside messages/lists elsewhere aren't hijacked.
+        startedFromEdge = touch.clientX <= 32;
 
     };
 
@@ -556,18 +564,18 @@ useEffect(() => {
         }
 
 
-        // Finger moved right → left
-        // OPEN SIDEBAR
-        if (deltaX < 0) {
+        // Finger moved left → right (swipe right), starting from the
+        // left edge → OPEN SIDEBAR
+        if (deltaX > 0 && startedFromEdge && !sidebarOpen) {
 
             setSidebarOpen(true);
 
         }
 
 
-        // Finger moved left → right
-        // CLOSE SIDEBAR
-        else {
+        // Finger moved right → left (swipe left) while the sidebar
+        // is open → CLOSE SIDEBAR
+        else if (deltaX < 0 && sidebarOpen) {
 
             setSidebarOpen(false);
 
@@ -576,13 +584,13 @@ useEffect(() => {
     };
 
 
-    chatMain.addEventListener(
+    layoutEl.addEventListener(
         "touchstart",
         handleTouchStart,
         { passive: true }
     );
 
-    chatMain.addEventListener(
+    layoutEl.addEventListener(
         "touchend",
         handleTouchEnd,
         { passive: true }
@@ -591,19 +599,19 @@ useEffect(() => {
 
     return () => {
 
-        chatMain.removeEventListener(
+        layoutEl.removeEventListener(
             "touchstart",
             handleTouchStart
         );
 
-        chatMain.removeEventListener(
+        layoutEl.removeEventListener(
             "touchend",
             handleTouchEnd
         );
 
     };
 
-}, []);
+}, [sidebarOpen]);
 
     const typing = () => {
         if (!selectedUser) return;
@@ -800,15 +808,47 @@ const closeMoreMenu = () => {
 };
 
 
+    // Turns a getUserMedia rejection into a message that actually
+    // tells the user what to do next, instead of a generic alert.
+    const describeMediaError = (error, wantsVideo) => {
+
+        const device = wantsVideo ? "camera and microphone" : "microphone";
+
+        switch (error?.name) {
+
+            case "NotAllowedError":
+            case "PermissionDeniedError":
+                return `${device[0].toUpperCase()}${device.slice(1)} access was denied. ` +
+                    `Enable it for this app in your phone's Settings → Apps → Permissions, then try again.`;
+
+            case "NotFoundError":
+            case "DevicesNotFoundError":
+                return `No ${device} was found on this device.`;
+
+            case "NotReadableError":
+            case "TrackStartError":
+                return `Couldn't access the ${device} — it may be in use by another app.`;
+
+            default:
+                return `Couldn't access the ${device}. Please check app permissions and try again.`;
+
+        }
+
+    };
+
     const startVoiceCall = async () => {
 
     if (!selectedUser) return;
 
     try {
 
-        await navigator.mediaDevices.getUserMedia({
+        const stream = await navigator.mediaDevices.getUserMedia({
             audio: true
         });
+
+        // Permission check only — actual call stream is handled
+        // elsewhere, so release the mic immediately.
+        stream.getTracks().forEach(track => track.stop());
 
         setCallParticipants([]);
 
@@ -816,9 +856,9 @@ const closeMoreMenu = () => {
 
         setIsCallActive(true);
 
-    } catch {
+    } catch (error) {
 
-        alert("Microphone permission denied.");
+        alert(describeMediaError(error, false));
 
     }
 
@@ -831,10 +871,12 @@ const startVideoCall = async () => {
 
     try {
 
-        await navigator.mediaDevices.getUserMedia({
+        const stream = await navigator.mediaDevices.getUserMedia({
             audio: true,
             video: true
         });
+
+        stream.getTracks().forEach(track => track.stop());
 
         setCallParticipants([]);
 
@@ -842,9 +884,9 @@ const startVideoCall = async () => {
 
         setIsCallActive(true);
 
-    } catch {
+    } catch (error) {
 
-        alert("Camera or microphone permission denied.");
+        alert(describeMediaError(error, true));
 
     }
 
@@ -1438,7 +1480,7 @@ if (!user) {
 
 
     return (
-        <div className="chat-layout">
+        <div className="chat-layout" ref={chatMainRef}>
             <div
     className={`sidebar ${
         sidebarOpen ? "sidebar-open" : ""
@@ -1560,6 +1602,7 @@ if (!user) {
                     startVideoCall={startVideoCall}
                     openMoreMenu={openMoreMenu}
                     openInfoPanel={() => setShowInfoPanel(true)}
+                    onOpenSidebar={() => setSidebarOpen(true)}
                 />
 
                 <>

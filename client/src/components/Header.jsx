@@ -6,7 +6,8 @@ import {
     FaMoon,
     FaSun,
     FaEllipsisVertical,
-    FaGear
+    FaGear,
+    FaBars
 } from "react-icons/fa6";
 
 import SettingsMenu from "./SettingsMenu";
@@ -25,7 +26,8 @@ function Header({
     startVoiceCall,
     startVideoCall,
     openMoreMenu,
-    openInfoPanel
+    openInfoPanel,
+    onOpenSidebar
 }) {
 
     const online =
@@ -40,6 +42,18 @@ function Header({
 
     return (
         <header className="header">
+
+            <button
+                type="button"
+                className="header-menu-btn"
+                title="Menu"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenSidebar?.();
+                }}
+            >
+                <FaBars />
+            </button>
 
             {/* LEFT */}
 

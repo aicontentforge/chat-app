@@ -157,3 +157,33 @@
     cursor:pointer;
 
 }
+
+@media (max-width: 640px) {
+
+    .group-page {
+        align-items: stretch;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .group-card {
+        width: 100%;
+        border-radius: 0;
+        padding: 22px 16px 40px;
+        box-shadow: none;
+    }
+
+    .group-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .member-card {
+        padding: 12px 10px;
+    }
+
+    .group-buttons {
+        flex-direction: column;
+    }
+
+}

@@ -295,3 +295,70 @@
     background:#d8dfec;
     border-radius:30px;
 }
+/* ================= MOBILE ================= */
+
+@media (max-width: 640px) {
+
+    .dashboard {
+        padding: 16px;
+        gap: 18px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .card {
+        padding: 16px 12px;
+        border-radius: 16px;
+    }
+
+    .card h3 {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .card h1 {
+        font-size: 26px;
+    }
+
+    .recent-section,
+    .supporters-card {
+        padding: 18px 16px;
+        border-radius: 18px;
+    }
+
+    .recent-chat {
+        padding: 12px 6px;
+        gap: 12px;
+    }
+
+    .recent-chat img {
+        width: 46px;
+        height: 46px;
+    }
+
+    .recent-chat p {
+        max-width: 60vw;
+    }
+
+    .supporters-header {
+        flex-wrap: wrap;
+    }
+
+    .supporters-header button {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .top-donor-feature {
+        padding: 18px 14px;
+    }
+
+    .my-donor-position {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+}

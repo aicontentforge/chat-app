@@ -69,12 +69,37 @@ function LocationPicker({ onLocation }) {
 
             },
 
-            () => {
+            (error) => {
 
                 setLoading(false);
 
-                alert("Location permission denied.");
+                if (error?.code === error?.PERMISSION_DENIED) {
 
+                    alert(
+                        "Location access was denied. Enable it for this app in " +
+                        "your phone's Settings → Apps → Permissions → Location, then try again."
+                    );
+
+                } else if (error?.code === error?.POSITION_UNAVAILABLE) {
+
+                    alert("Couldn't determine your location right now. Please try again.");
+
+                } else if (error?.code === error?.TIMEOUT) {
+
+                    alert("Location request timed out. Please try again.");
+
+                } else {
+
+                    alert("Could not access your location.");
+
+                }
+
+            },
+
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 60000
             }
 
         );
