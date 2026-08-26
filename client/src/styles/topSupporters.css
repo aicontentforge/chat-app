@@ -1,5 +1,8 @@
 .supporters-page {
-    min-height: 100vh;
+    height:100dvh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    box-sizing:border-box;
     padding: 30px;
     background: #f5f7fb;
     box-sizing: border-box;

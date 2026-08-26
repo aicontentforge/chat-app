@@ -1,6 +1,9 @@
 .create-group-page{
 
-    min-height:100vh;
+    height:100dvh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    box-sizing:border-box;
 
     display:flex;
 
@@ -14,7 +17,7 @@
 
 .create-group-card{
 
-    width:700px;
+    width: min(700px, 92vw);
 
     background:white;
 
@@ -123,22 +126,9 @@
     background:#1d4ed8;
 
 }
-@media (max-width: 640px) {
 
-    .create-group-page {
-        align-items: stretch;
-        min-height: 100vh;
+@media (max-width: 480px){
+    .create-group-card{
+        padding: 22px 18px;
     }
-
-    .create-group-card {
-        width: 100%;
-        border-radius: 0;
-        padding: 20px 16px 40px;
-        box-shadow: none;
-    }
-
-    .member-list {
-        max-height: none;
-    }
-
 }

@@ -1,6 +1,6 @@
 .profile-page{
 
-    min-height:100vh;
+    height:100dvh;
 
     display:flex;
 
@@ -14,11 +14,15 @@
 
     overflow-y:auto;
 
+    -webkit-overflow-scrolling:touch;
+
+    box-sizing:border-box;
+
 }
 
 .profile-card{
 
-    width:520px;
+    width: min(520px, 92vw);
 
     background:white;
 
@@ -163,37 +167,5 @@ transform:scale(1.05);
 background:#3b82f6;
 
 color:white;
-
-}
-
-@media (max-width: 600px) {
-
-    .profile-page {
-        padding: 0;
-        align-items: stretch;
-    }
-
-    .profile-card {
-        width: 100%;
-        min-height: 100vh;
-        border-radius: 0;
-        padding: 24px 18px 40px;
-        box-shadow: none;
-        margin-bottom: 0;
-    }
-
-    .profile-avatar {
-        width: 110px;
-        height: 110px;
-    }
-
-    .category-grid {
-        justify-content: center;
-    }
-
-    .category {
-        padding: 8px 14px;
-        font-size: 14px;
-    }
 
 }

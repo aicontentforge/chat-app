@@ -295,70 +295,55 @@
     background:#d8dfec;
     border-radius:30px;
 }
-/* ================= MOBILE ================= */
 
-@media (max-width: 640px) {
 
-    .dashboard {
-        padding: 16px;
-        gap: 18px;
+@media (max-width: 767px){
+
+    .dashboard{
+        padding:16px;
+        gap:18px;
     }
 
-    .dashboard-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
+    .dashboard-grid{
+        grid-template-columns:repeat(3,1fr);
+        gap:10px;
     }
 
-    .card {
-        padding: 16px 12px;
-        border-radius: 16px;
+    .card{
+        padding:14px 10px;
+        border-radius:16px;
     }
 
-    .card h3 {
-        font-size: 12px;
-        margin-bottom: 8px;
+    .card h3{
+        font-size:11px;
+        margin-bottom:8px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
     }
 
-    .card h1 {
-        font-size: 26px;
+    .card h1{
+        font-size:24px;
     }
 
-    .recent-section,
-    .supporters-card {
-        padding: 18px 16px;
-        border-radius: 18px;
+    .supporters-card{
+        padding:20px 16px;
     }
 
-    .recent-chat {
-        padding: 12px 6px;
-        gap: 12px;
+    .supporters-header{
+        flex-wrap:wrap;
+        gap:10px;
     }
 
-    .recent-chat img {
-        width: 46px;
-        height: 46px;
+    .supporters-header h2{
+        font-size:17px;
     }
 
-    .recent-chat p {
-        max-width: 60vw;
+    .top-donor-feature{
+        padding:18px;
     }
 
-    .supporters-header {
-        flex-wrap: wrap;
+    .recent-section{
+        padding:18px;
     }
-
-    .supporters-header button {
-        padding: 8px 14px;
-        font-size: 13px;
-    }
-
-    .top-donor-feature {
-        padding: 18px 14px;
-    }
-
-    .my-donor-position {
-        flex-direction: column;
-        gap: 10px;
-    }
-
 }

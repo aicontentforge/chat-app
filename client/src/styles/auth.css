@@ -1,6 +1,9 @@
 .auth-page{
 
-    min-height:100vh;
+    height:100dvh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    box-sizing:border-box;
 
     display:flex;
 
@@ -14,8 +17,7 @@
 
 .auth-card{
 
-    width:420px;
-    max-width:92vw;
+    width: min(420px, 92vw);
 
     background:white;
 
@@ -27,19 +29,10 @@
 
 }
 
-@media (max-width: 480px) {
+@media (max-width: 480px){
 
-    .auth-page {
-        padding: 16px;
-    }
-
-    .auth-card {
-        padding: 28px 22px;
-    }
-
-    .auth-card input,
-    .auth-card button {
-        padding: 13px;
+    .auth-card{
+        padding:26px 20px;
     }
 
 }
