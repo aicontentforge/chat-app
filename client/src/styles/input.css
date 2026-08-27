@@ -7,6 +7,25 @@ flex-direction:column;
 gap:14px;
 }
 
+/*
+Holds the local/remote <video>/<audio> elements used for
+WebRTC calls. They must stay mounted at all times but must
+never be visible or take up space in the input bar - see
+Call.jsx for why they can't just be removed from the DOM.
+*/
+.call-media-holder{
+position:fixed;
+top:0;
+left:0;
+width:1px;
+height:1px;
+margin:0;
+padding:0;
+overflow:hidden;
+opacity:0;
+pointer-events:none;
+}
+
 .search-input{
 width:100%;
 height:48px;
@@ -266,6 +285,51 @@ opacity:1;
 
 transform:translateY(0);
 
+}
+
+}
+
+/* =========================================================
+   MOBILE
+   Matches the icon-button sizing used in chatinput.css so
+   the attach/mic buttons shrink in step with the emoji and
+   send buttons instead of forcing the message box to
+   collapse to a sliver.
+========================================================= */
+
+@media (max-width: 480px){
+
+.icon-btn{
+width:38px;
+height:38px;
+flex-basis:38px;
+border-radius:12px;
+font-size:17px;
+}
+
+.attachment-popup{
+padding:12px;
+gap:12px;
+left:-4px;
+bottom:52px;
+border-radius:18px;
+}
+
+.attachment-circle{
+width:46px;
+height:46px;
+border-radius:14px;
+font-size:20px;
+}
+
+}
+
+@media (max-width: 360px){
+
+.icon-btn{
+width:36px;
+height:36px;
+flex-basis:36px;
 }
 
 }

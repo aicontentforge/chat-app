@@ -204,7 +204,19 @@ function Call({ currentUser, selectedUser }) {
 
     return (
 
-        <div style={{ marginTop: 10 }}>
+        /*
+         * These elements only exist to hold the WebRTC
+         * media streams (srcObject) - the actual call UI
+         * is rendered by <CallScreen/>. They must stay
+         * mounted (not conditionally rendered) so the refs
+         * are always ready, but they must never take up
+         * layout space - previously they had no sizing
+         * safeguard, so every open conversation showed two
+         * full-width "broken video" placeholders under the
+         * input bar.
+         */
+
+        <div className="call-media-holder" aria-hidden="true">
 
             <audio
                 ref={localAudio}
@@ -217,7 +229,6 @@ function Call({ currentUser, selectedUser }) {
                 autoPlay
                 muted
                 playsInline
-                width="200"
             />
 
             <audio
@@ -229,7 +240,6 @@ function Call({ currentUser, selectedUser }) {
                 ref={remoteVideo}
                 autoPlay
                 playsInline
-                width="200"
             />
 
         </div>

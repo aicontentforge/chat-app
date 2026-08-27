@@ -8,6 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
 
     padding: 0 22px;
 
@@ -30,48 +31,6 @@
 
 
 /* =========================================
-   MOBILE MENU (hamburger)
-========================================= */
-
-.header-menu-btn {
-    display: none;
-
-    width: 40px;
-    height: 40px;
-
-    align-items: center;
-    justify-content: center;
-
-    margin-right: 6px;
-
-    border: none;
-    border-radius: 10px;
-
-    background: transparent;
-
-    color: var(--text);
-
-    font-size: 18px;
-
-    cursor: pointer;
-
-    flex-shrink: 0;
-}
-
-.header-menu-btn:active {
-    background: var(--hover-bg, rgba(0,0,0,.06));
-}
-
-@media (max-width: 767px) {
-
-    .header-menu-btn {
-        display: flex;
-    }
-
-}
-
-
-/* =========================================
    LEFT
 ========================================= */
 
@@ -84,6 +43,57 @@
     cursor: pointer;
 
     min-width: 0;
+
+    flex: 1 1 auto;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   Only shown on mobile widths (see RESPONSIVE section) when
+   a conversation is open, since that's the only time there's
+   somewhere to go "back" to - on wider screens the chat list
+   is already visible alongside the conversation.
+========================================================= */
+
+.header-back-btn {
+    display: none;
+
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: var(--text);
+
+    cursor: pointer;
+
+    transition:
+        background-color .2s ease,
+        transform .2s ease;
+}
+
+.header-back-btn svg {
+    width: 19px;
+    height: 19px;
+}
+
+.header-back-btn:hover {
+    background: var(--hover-bg);
+}
+
+.header-back-btn:active {
+    transform: scale(.9);
 }
 
 
@@ -136,6 +146,12 @@
 .header-user-info h2 {
     margin: 0;
 
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    min-width: 0;
+
     color: var(--text);
 
     font-size: 19px;
@@ -143,6 +159,15 @@
     font-weight: 700;
 
     line-height: 1.1;
+}
+
+.header-name-text {
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 
@@ -549,16 +574,167 @@ html[data-theme="dark"] .header-logout-btn:hover {
 }
 
 
-@media (max-width: 600px) {
+/* -----------------------------------------
+   MOBILE (matches the 768px breakpoint the
+   sidebar uses to become an off-canvas
+   drawer - that's also when "back" starts
+   meaning something).
+----------------------------------------- */
 
-    .header-user-info h2 {
-        font-size: 16px;
+@media (max-width: 768px) {
+
+    .header {
+        height: 64px;
+        padding: 0 14px;
+        gap: 6px;
+    }
+
+    .header-back-btn {
+        display: flex;
+    }
+
+    .header-left {
+        gap: 10px;
     }
 
     .header-avatar {
-        width: 44px;
-        height: 44px;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
     }
+
+    .header-user-info h2 {
+        font-size: 16px;
+        gap: 5px;
+    }
+
+    .status {
+        font-size: 11px;
+    }
+
+    .header-right {
+        gap: 4px;
+    }
+
+    .header-icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+    }
+
+    .header-icon-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .settings-dropdown {
+        width: 220px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .header {
+        padding: 0 10px;
+    }
+
+    .header-back-btn {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
+    }
+
+    .header-avatar {
+        width: 38px;
+        height: 38px;
+    }
+
+    .header-user-info h2 {
+        font-size: 15px;
+    }
+
+    .header-user-info .status {
+        display: none;
+    }
+
+    .header-right {
+        gap: 3px;
+    }
+
+    .header-icon-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+
+        /*
+           These are borderless/backgroundless past this
+           point - with 5 of them in a row on a phone-width
+           screen, the borders read as visual clutter and
+           make the row feel more cramped than it is.
+        */
+        border-color: transparent;
+        background: transparent;
+    }
+
+    .header-icon-btn:hover,
+    .header-icon-btn:active {
+        background: var(--hover-bg);
+    }
+
+    .settings-dropdown {
+        width: 200px;
+        right: -6px;
+    }
+
+}
+
+
+@media (max-width: 360px) {
+
+    .header {
+        padding: 0 8px;
+    }
+
+    .header-back-btn {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
+    }
+
+    .header-left {
+        gap: 8px;
+    }
+
+    .header-avatar {
+        width: 34px;
+        height: 34px;
+    }
+
+    .header-user-info h2 {
+        font-size: 14px;
+    }
+
+    .header-right {
+        gap: 2px;
+    }
+
+    .header-icon-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .header-icon-btn svg {
+        width: 15px;
+        height: 15px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
     .header-profile-btn {
     display: none;
 }

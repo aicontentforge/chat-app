@@ -9,6 +9,8 @@ border-radius:24px;
 box-shadow:0 12px 35px rgba(15,23,42,.06);
 position:relative;
 transition:box-shadow .25s ease, border-color .25s ease;
+max-width:100%;
+box-sizing:border-box;
 }
 
 .chat-input-wrapper:focus-within{
@@ -17,7 +19,8 @@ box-shadow:0 16px 40px rgba(37,99,235,.12);
 }
 
 .chat-textarea{
-flex:1;
+flex:1 1 0%;
+min-width:0;
 resize:none;
 border:none;
 outline:none;
@@ -50,7 +53,7 @@ border-radius:20px;
 .emoji-btn{
 width:50px;
 height:50px;
-flex-shrink:0;
+flex:0 0 50px;
 border:none;
 border-radius:16px;
 background:#f7f9fc;
@@ -71,6 +74,7 @@ transform:translateY(-2px);
 .send-btn{
 width:56px;
 height:56px;
+flex:0 0 56px;
 border:none;
 border-radius:18px;
 background:linear-gradient(135deg,#2563eb,#4f7cff);
@@ -84,8 +88,18 @@ box-shadow:0 12px 30px rgba(37,99,235,.28);
 transition:.25s;
 }
 
+.send-btn svg{
+width:20px;
+height:20px;
+transform:translateX(-1px);
+}
+
 .send-btn:hover{
 transform:translateY(-3px) scale(1.05);
+}
+
+.send-btn:active{
+transform:scale(.94);
 }
 
 .emoji-picker{
@@ -116,4 +130,72 @@ transform:none;
 html[data-theme="dark"] .message-input-container {
     background: #1e293b;
     border-color: #334155;
+}
+
+/* =========================================================
+   MOBILE
+   Four fixed-size icon buttons (emoji, attach, mic, send)
+   were eating so much width on a phone screen that the
+   textarea had almost nothing left, which is why the
+   "Type your message..." placeholder was wrapping into
+   "Ty" / "pe". Shrinking the buttons gives it room back.
+========================================================= */
+
+@media (max-width: 480px){
+
+    .chat-input-wrapper{
+    gap:6px;
+    padding:8px 10px;
+    border-radius:20px;
+    }
+
+    .emoji-btn{
+    width:38px;
+    height:38px;
+    flex:0 0 38px;
+    border-radius:12px;
+    font-size:17px;
+    }
+
+    .chat-textarea{
+    padding:11px 14px;
+    font-size:14.5px;
+    min-height:40px;
+    border-radius:14px;
+    }
+
+    .send-btn{
+    width:40px;
+    height:40px;
+    flex:0 0 40px;
+    border-radius:12px;
+    }
+
+    .send-btn svg{
+    width:17px;
+    height:17px;
+    }
+
+    .emoji-picker{
+    left:-6px;
+    bottom:66px;
+    max-width:calc(100vw - 20px);
+    }
+
+}
+
+@media (max-width: 360px){
+
+    .chat-input-wrapper{
+    gap:5px;
+    padding:7px 8px;
+    }
+
+    .emoji-btn,
+    .send-btn{
+    width:36px;
+    height:36px;
+    flex-basis:36px;
+    }
+
 }

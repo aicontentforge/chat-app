@@ -119,6 +119,7 @@ const [translationLanguage, setTranslationLanguage] =
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
 const chatMainRef = useRef(null);
+const sidebarRef = useRef(null);
     
 
 
@@ -510,16 +511,13 @@ checkBlocked();
 
 useEffect(() => {
 
-    // Listens on the whole layout (works whether the sidebar,
-    // backdrop, or chat area is what the finger actually touches)
-    const layoutEl = chatMainRef.current;
+    const chatMain = chatMainRef.current;
 
-    if (!layoutEl) return;
+    if (!chatMain) return;
 
 
     let touchStartX = 0;
     let touchStartY = 0;
-    let startedFromEdge = false;
 
 
     const handleTouchStart = (e) => {
@@ -530,11 +528,6 @@ useEffect(() => {
 
         touchStartX = touch.clientX;
         touchStartY = touch.clientY;
-
-        // Only treat a touch that begins near the left edge of the
-        // screen as a potential "open sidebar" gesture, so normal
-        // swipes inside messages/lists elsewhere aren't hijacked.
-        startedFromEdge = touch.clientX <= 32;
 
     };
 
@@ -564,18 +557,19 @@ useEffect(() => {
         }
 
 
-        // Finger moved left → right (swipe right), starting from the
-        // left edge → OPEN SIDEBAR
-        if (deltaX > 0 && startedFromEdge && !sidebarOpen) {
+        // Finger moved left → right, starting near
+        // the screen edge (like a native drawer)
+        // OPEN SIDEBAR
+        if (deltaX > 0 && touchStartX < 40) {
 
             setSidebarOpen(true);
 
         }
 
 
-        // Finger moved right → left (swipe left) while the sidebar
-        // is open → CLOSE SIDEBAR
-        else if (deltaX < 0 && sidebarOpen) {
+        // Finger moved right → left
+        // CLOSE SIDEBAR
+        else if (deltaX < 0) {
 
             setSidebarOpen(false);
 
@@ -584,13 +578,13 @@ useEffect(() => {
     };
 
 
-    layoutEl.addEventListener(
+    chatMain.addEventListener(
         "touchstart",
         handleTouchStart,
         { passive: true }
     );
 
-    layoutEl.addEventListener(
+    chatMain.addEventListener(
         "touchend",
         handleTouchEnd,
         { passive: true }
@@ -599,12 +593,77 @@ useEffect(() => {
 
     return () => {
 
-        layoutEl.removeEventListener(
+        chatMain.removeEventListener(
             "touchstart",
             handleTouchStart
         );
 
-        layoutEl.removeEventListener(
+        chatMain.removeEventListener(
+            "touchend",
+            handleTouchEnd
+        );
+
+    };
+
+}, []);
+
+// ========================================
+// SWIPE-TO-CLOSE ON THE OPEN SIDEBAR ITSELF
+// ========================================
+
+useEffect(() => {
+
+    const sidebarEl = sidebarRef.current;
+
+    if (!sidebarEl || !sidebarOpen) return;
+
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    const handleTouchStart = (e) => {
+
+        const touch = e.touches[0];
+
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+
+    };
+
+    const handleTouchEnd = (e) => {
+
+        const touch = e.changedTouches[0];
+
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+
+        if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+        if (deltaX > -50) return;
+
+        setSidebarOpen(false);
+
+    };
+
+    sidebarEl.addEventListener(
+        "touchstart",
+        handleTouchStart,
+        { passive: true }
+    );
+
+    sidebarEl.addEventListener(
+        "touchend",
+        handleTouchEnd,
+        { passive: true }
+    );
+
+    return () => {
+
+        sidebarEl.removeEventListener(
+            "touchstart",
+            handleTouchStart
+        );
+
+        sidebarEl.removeEventListener(
             "touchend",
             handleTouchEnd
         );
@@ -753,9 +812,19 @@ const openMoreMenu = (e) => {
 
     const rect = e.currentTarget.getBoundingClientRect();
 
+    const menuWidth = 230;
+
+    // Clamp so the dropdown can never render partly off-screen
+    // on narrow phones (it used to be anchored purely off the
+    // button's position with no viewport check).
+    const left = Math.min(
+        Math.max(8, rect.right - menuWidth),
+        window.innerWidth - menuWidth - 8
+    );
+
     setMenuPosition({
         top: rect.bottom + 8,
-        left: rect.right - 220
+        left
     });
 
     setShowMoreMenu(true);
@@ -808,47 +877,15 @@ const closeMoreMenu = () => {
 };
 
 
-    // Turns a getUserMedia rejection into a message that actually
-    // tells the user what to do next, instead of a generic alert.
-    const describeMediaError = (error, wantsVideo) => {
-
-        const device = wantsVideo ? "camera and microphone" : "microphone";
-
-        switch (error?.name) {
-
-            case "NotAllowedError":
-            case "PermissionDeniedError":
-                return `${device[0].toUpperCase()}${device.slice(1)} access was denied. ` +
-                    `Enable it for this app in your phone's Settings → Apps → Permissions, then try again.`;
-
-            case "NotFoundError":
-            case "DevicesNotFoundError":
-                return `No ${device} was found on this device.`;
-
-            case "NotReadableError":
-            case "TrackStartError":
-                return `Couldn't access the ${device} — it may be in use by another app.`;
-
-            default:
-                return `Couldn't access the ${device}. Please check app permissions and try again.`;
-
-        }
-
-    };
-
     const startVoiceCall = async () => {
 
     if (!selectedUser) return;
 
     try {
 
-        const stream = await navigator.mediaDevices.getUserMedia({
+        await navigator.mediaDevices.getUserMedia({
             audio: true
         });
-
-        // Permission check only — actual call stream is handled
-        // elsewhere, so release the mic immediately.
-        stream.getTracks().forEach(track => track.stop());
 
         setCallParticipants([]);
 
@@ -856,9 +893,9 @@ const closeMoreMenu = () => {
 
         setIsCallActive(true);
 
-    } catch (error) {
+    } catch {
 
-        alert(describeMediaError(error, false));
+        alert("Microphone permission denied.");
 
     }
 
@@ -871,12 +908,10 @@ const startVideoCall = async () => {
 
     try {
 
-        const stream = await navigator.mediaDevices.getUserMedia({
+        await navigator.mediaDevices.getUserMedia({
             audio: true,
             video: true
         });
-
-        stream.getTracks().forEach(track => track.stop());
 
         setCallParticipants([]);
 
@@ -884,9 +919,9 @@ const startVideoCall = async () => {
 
         setIsCallActive(true);
 
-    } catch (error) {
+    } catch {
 
-        alert(describeMediaError(error, true));
+        alert("Camera or microphone permission denied.");
 
     }
 
@@ -1480,8 +1515,21 @@ if (!user) {
 
 
     return (
-        <div className="chat-layout" ref={chatMainRef}>
+        <div className="chat-layout">
+
+            {!sidebarOpen && (
+                <button
+                    type="button"
+                    className="sidebar-edge-tab"
+                    onClick={() => setSidebarOpen(true)}
+                    aria-label="Open chats"
+                >
+                    ›
+                </button>
+            )}
+
             <div
+    ref={sidebarRef}
     className={`sidebar ${
         sidebarOpen ? "sidebar-open" : ""
     }`}
@@ -1583,6 +1631,7 @@ if (!user) {
 )}
 
             <div
+    ref={chatMainRef}
     className="chat-main"
     style={{
         backgroundImage: wallpaper ? `url(${wallpaper})` : "",
@@ -1602,7 +1651,7 @@ if (!user) {
                     startVideoCall={startVideoCall}
                     openMoreMenu={openMoreMenu}
                     openInfoPanel={() => setShowInfoPanel(true)}
-                    onOpenSidebar={() => setSidebarOpen(true)}
+                    onBack={() => setShowDashboard(true)}
                 />
 
                 <>

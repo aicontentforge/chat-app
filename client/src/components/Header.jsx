@@ -7,7 +7,7 @@ import {
     FaSun,
     FaEllipsisVertical,
     FaGear,
-    FaBars
+    FaChevronLeft
 } from "react-icons/fa6";
 
 import SettingsMenu from "./SettingsMenu";
@@ -27,7 +27,7 @@ function Header({
     startVideoCall,
     openMoreMenu,
     openInfoPanel,
-    onOpenSidebar
+    onBack
 }) {
 
     const online =
@@ -43,17 +43,19 @@ function Header({
     return (
         <header className="header">
 
-            <button
-                type="button"
-                className="header-menu-btn"
-                title="Menu"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    onOpenSidebar?.();
-                }}
-            >
-                <FaBars />
-            </button>
+            {/* BACK (mobile only, only inside an open chat) */}
+
+            {selectedUser && onBack && (
+                <button
+                    type="button"
+                    className="header-back-btn"
+                    title="Back to chats"
+                    aria-label="Back to chats"
+                    onClick={onBack}
+                >
+                    <FaChevronLeft />
+                </button>
+            )}
 
             {/* LEFT */}
 
@@ -75,7 +77,9 @@ function Header({
                 <div className="header-user-info">
 
                     <h2>
-                        {selectedUser || "Dashboard"}
+                        <span className="header-name-text">
+                            {selectedUser || "Dashboard"}
+                        </span>
                         {selectedUser && !isGroupChat && (
                             <DonorBadge username={selectedUser} />
                         )}

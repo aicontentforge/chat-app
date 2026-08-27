@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import EmojiPicker from "emoji-picker-react";
+import { FiSend } from "react-icons/fi";
 import "../styles/chatinput.css";
 
 function ChatInput({
@@ -121,8 +122,10 @@ function ChatInput({
                 type="button"
                 className="send-btn"
                 onClick={send}
+                aria-label="Send message"
+                title="Send"
             >
-                ✈
+                <FiSend />
             </button>
 
         </div>
