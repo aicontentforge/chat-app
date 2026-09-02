@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
     FaMicrophone,
@@ -9,7 +9,8 @@ import {
     FaVolumeLow,
     FaUserPlus,
     FaEllipsis,
-    FaPhoneSlash
+    FaPhoneSlash,
+    FaPhone
 } from "react-icons/fa6";
 
 import "../styles/callScreen.css";
@@ -18,8 +19,15 @@ import "../styles/callScreen.css";
 function CallScreen({
     isCallActive,
     callType = "audio",
+    callStatus = "connected",     // "outgoing" | "incoming" | "connected"
     contactName,
+    localStream,
+    remoteStream,
     onEnd,
+    onAccept,
+    onDecline,
+    onToggleMute,
+    onToggleVideo,
     onAddPeople
 }) {
 
@@ -32,7 +40,9 @@ function CallScreen({
     const [callStartedAt, setCallStartedAt] = useState(null);
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
 
-    const [isConnected, setIsConnected] = useState(false);
+    const localVideoRef = useRef(null);
+    const remoteVideoRef = useRef(null);
+    const remoteAudioRef = useRef(null);
 
 
     /*
@@ -41,7 +51,6 @@ function CallScreen({
     useEffect(() => {
 
         if (!isCallActive) {
-            setIsConnected(false);
             setCallStartedAt(null);
             setElapsedSeconds(0);
             return;
@@ -51,61 +60,69 @@ function CallScreen({
         setVideoEnabled(callType === "video");
         setSpeakerEnabled(false);
 
-        setIsConnected(false);
-        setCallStartedAt(null);
-        setElapsedSeconds(0);
-
-
-        /*
-         * TEMPORARY:
-         * Simulates the other user accepting the call
-         * after 2 seconds.
-         *
-         * Replace this later with your Socket.IO/WebRTC
-         * "call accepted" event.
-         */
-        const ringingTimer = setTimeout(() => {
-
-            const startedAt = Date.now();
-
-            setCallStartedAt(startedAt);
-            setIsConnected(true);
-
-        }, 2000);
-
-
-        return () => {
-            clearTimeout(ringingTimer);
-        };
-
     }, [isCallActive, callType]);
 
 
     /*
-     * Live call timer.
+     * The timer starts the moment the call actually connects,
+     * driven by the real "call_accepted" / accept flow - not a
+     * fixed delay pretending the other side picked up.
      */
     useEffect(() => {
 
-        if (!isConnected || !callStartedAt) {
+        if (callStatus === "connected" && !callStartedAt) {
+            setCallStartedAt(Date.now());
+        }
+
+        if (callStatus !== "connected") {
+            setCallStartedAt(null);
+            setElapsedSeconds(0);
+        }
+
+    }, [callStatus]);
+
+
+    useEffect(() => {
+
+        if (callStatus !== "connected" || !callStartedAt) {
             return;
         }
 
         const timer = setInterval(() => {
 
-            const seconds = Math.floor(
-                (Date.now() - callStartedAt) / 1000
+            setElapsedSeconds(
+                Math.floor((Date.now() - callStartedAt) / 1000)
             );
-
-            setElapsedSeconds(seconds);
 
         }, 1000);
 
+        return () => clearInterval(timer);
 
-        return () => {
-            clearInterval(timer);
-        };
+    }, [callStatus, callStartedAt]);
 
-    }, [isConnected, callStartedAt]);
+
+    /*
+     * Bind the real MediaStreams to the actual media elements.
+     */
+    useEffect(() => {
+
+        if (localVideoRef.current) {
+            localVideoRef.current.srcObject = localStream || null;
+        }
+
+    }, [localStream]);
+
+    useEffect(() => {
+
+        if (remoteVideoRef.current) {
+            remoteVideoRef.current.srcObject = remoteStream || null;
+        }
+
+        if (remoteAudioRef.current) {
+            remoteAudioRef.current.srcObject = remoteStream || null;
+        }
+
+    }, [remoteStream]);
 
 
     if (!isCallActive) {
@@ -116,7 +133,6 @@ function CallScreen({
     const formatTime = (totalSeconds) => {
 
         const minutes = Math.floor(totalSeconds / 60);
-
         const seconds = totalSeconds % 60;
 
         return `${String(minutes).padStart(2, "0")}:${String(
@@ -126,13 +142,29 @@ function CallScreen({
     };
 
 
-    const handleEndCall = () => {
+    const statusLabel = () => {
 
-        setIsConnected(false);
-        setCallStartedAt(null);
-        setElapsedSeconds(0);
+        if (callStatus === "incoming") return "Incoming call…";
+        if (callStatus === "connected") return formatTime(elapsedSeconds);
+        return "Ringing…";
 
-        onEnd?.();
+    };
+
+
+    const toggleMute = () => {
+
+        const next = !muted;
+        setMuted(next);
+        onToggleMute?.(next);
+
+    };
+
+
+    const toggleVideo = () => {
+
+        const next = !videoEnabled;
+        setVideoEnabled(next);
+        onToggleVideo?.(next);
 
     };
 
@@ -147,244 +179,210 @@ function CallScreen({
         : "?";
 
 
+    const showVideo =
+        callType === "video" &&
+        callStatus === "connected";
+
+
     return (
 
         <div className="call-screen">
 
-            <div className="call-screen-content">
+            {/* remote audio always plays once connected, even for
+                video calls the <video> element carries the audio
+                track too, so this only matters for voice calls */}
 
-                {/* =====================================
-                    CALL TITLE
-                ===================================== */}
+            {callStatus === "connected" && callType === "audio" && (
+                <audio ref={remoteAudioRef} autoPlay />
+            )}
+
+            {showVideo && (
+
+                <div className="call-video-stage">
+
+                    <video
+                        ref={remoteVideoRef}
+                        className="call-remote-video"
+                        autoPlay
+                        playsInline
+                    />
+
+                    <video
+                        ref={localVideoRef}
+                        className={`call-local-video ${
+                            videoEnabled ? "" : "call-local-video-off"
+                        }`}
+                        autoPlay
+                        playsInline
+                        muted
+                    />
+
+                </div>
+
+            )}
+
+            <div
+                className={`call-screen-content ${
+                    showVideo ? "call-screen-content-video" : ""
+                }`}
+            >
 
                 <div className="call-app-name">
                     ChatSphere call
                 </div>
 
 
-                {/* =====================================
-                    AVATAR
-                ===================================== */}
+                {!showVideo && (
 
-                <div className="call-avatar-wrapper">
+                    <div className="call-avatar-wrapper">
 
-                    <img
-                        className="call-avatar"
-                        src={
-                            contactName
-                                ? `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(
-                                    contactName
-                                )}`
-                                : undefined
-                        }
-                        alt={contactName || "Contact"}
-                    />
+                        <img
+                            className="call-avatar"
+                            src={
+                                contactName
+                                    ? `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(
+                                        contactName
+                                    )}`
+                                    : undefined
+                            }
+                            alt={contactName || "Contact"}
+                        />
 
-                    {!contactName && (
-                        <div className="call-avatar-fallback">
-                            {initials}
-                        </div>
-                    )}
+                        {!contactName && (
+                            <div className="call-avatar-fallback">
+                                {initials}
+                            </div>
+                        )}
 
-                </div>
+                        {callStatus !== "connected" && (
+                            <span className="call-ring-pulse" />
+                        )}
 
+                    </div>
 
-                {/* =====================================
-                    CONTACT NAME
-                ===================================== */}
+                )}
+
 
                 <h1 className="call-contact-name">
                     {contactName || "Unknown"}
                 </h1>
 
 
-                {/* =====================================
-                    STATUS / TIMER
-                ===================================== */}
-
                 <div className="call-status">
-
-                    {isConnected
-                        ? formatTime(elapsedSeconds)
-                        : "Ringing…"
-                    }
-
+                    {statusLabel()}
                 </div>
 
-
-                {/* =====================================
-                    CALL TYPE
-                ===================================== */}
 
                 <div className="call-type-label">
-
-                    {callType === "video"
-                        ? "Video call"
-                        : "Voice call"
-                    }
-
+                    {callType === "video" ? "Video call" : "Voice call"}
                 </div>
 
 
                 {/* =====================================
-                    CONTROLS
+                    INCOMING CALL - accept / decline
                 ===================================== */}
 
-                <div className="call-controls">
+                {callStatus === "incoming" ? (
 
-
-                    {/* MUTE */}
-
-                    <button
-                        type="button"
-                        className={`call-control-btn ${
-                            muted ? "active" : ""
-                        }`}
-                        onClick={() =>
-                            setMuted(prev => !prev)
-                        }
-                        title={
-                            muted
-                                ? "Unmute"
-                                : "Mute"
-                        }
-                    >
-
-                        {muted
-                            ? <FaMicrophoneSlash />
-                            : <FaMicrophone />
-                        }
-
-                        <span>
-                            {muted
-                                ? "Unmute"
-                                : "Mute"
-                            }
-                        </span>
-
-                    </button>
-
-
-                    {/* VIDEO */}
-
-                    {callType === "video" && (
+                    <div className="call-incoming-actions">
 
                         <button
                             type="button"
-                            className={`call-control-btn ${
-                                !videoEnabled
-                                    ? "active"
-                                    : ""
-                            }`}
-                            onClick={() =>
-                                setVideoEnabled(
-                                    prev => !prev
-                                )
-                            }
-                            title={
-                                videoEnabled
-                                    ? "Turn video off"
-                                    : "Turn video on"
-                            }
+                            className="call-decline-btn"
+                            onClick={onDecline}
+                            title="Decline"
                         >
-
-                            {videoEnabled
-                                ? <FaVideo />
-                                : <FaVideoSlash />
-                            }
-
-                            <span>
-                                {videoEnabled
-                                    ? "Video"
-                                    : "Video off"
-                                }
-                            </span>
-
+                            <FaPhoneSlash />
+                            <span>Decline</span>
                         </button>
 
-                    )}
+                        <button
+                            type="button"
+                            className="call-accept-btn"
+                            onClick={onAccept}
+                            title="Accept"
+                        >
+                            <FaPhone />
+                            <span>Accept</span>
+                        </button>
 
+                    </div>
 
-                    {/* SPEAKER */}
+                ) : (
 
-                    <button
-                        type="button"
-                        className={`call-control-btn ${
-                            speakerEnabled
-                                ? "active"
-                                : ""
-                        }`}
-                        onClick={() =>
-                            setSpeakerEnabled(
-                                prev => !prev
-                            )
-                        }
-                        title="Speaker"
-                    >
+                    <>
 
-                        {speakerEnabled
-                            ? <FaVolumeHigh />
-                            : <FaVolumeLow />
-                        }
+                        <div className="call-controls">
 
-                        <span>
-                            Speaker
-                        </span>
+                            <button
+                                type="button"
+                                className={`call-control-btn ${muted ? "active" : ""}`}
+                                onClick={toggleMute}
+                                title={muted ? "Unmute" : "Mute"}
+                            >
+                                {muted ? <FaMicrophoneSlash /> : <FaMicrophone />}
+                                <span>{muted ? "Unmute" : "Mute"}</span>
+                            </button>
 
-                    </button>
+                            {callType === "video" && (
 
+                                <button
+                                    type="button"
+                                    className={`call-control-btn ${
+                                        !videoEnabled ? "active" : ""
+                                    }`}
+                                    onClick={toggleVideo}
+                                    title={videoEnabled ? "Turn video off" : "Turn video on"}
+                                >
+                                    {videoEnabled ? <FaVideo /> : <FaVideoSlash />}
+                                    <span>{videoEnabled ? "Video" : "Video off"}</span>
+                                </button>
 
-                    {/* ADD PEOPLE */}
+                            )}
 
-                    <button
-    type="button"
-    className="call-control-btn"
-    onClick={() => onAddPeople?.()}
-    title="Add people"
->
+                            <button
+                                type="button"
+                                className={`call-control-btn ${speakerEnabled ? "active" : ""}`}
+                                onClick={() => setSpeakerEnabled(prev => !prev)}
+                                title="Speaker"
+                            >
+                                {speakerEnabled ? <FaVolumeHigh /> : <FaVolumeLow />}
+                                <span>Speaker</span>
+                            </button>
 
-                        <FaUserPlus />
+                            <button
+                                type="button"
+                                className="call-control-btn"
+                                onClick={() => onAddPeople?.()}
+                                title="Add people"
+                            >
+                                <FaUserPlus />
+                                <span>Add</span>
+                            </button>
 
-                        <span>
-                            Add
-                        </span>
+                            <button
+                                type="button"
+                                className="call-control-btn"
+                                title="More"
+                            >
+                                <FaEllipsis />
+                                <span>More</span>
+                            </button>
 
-                    </button>
+                        </div>
 
+                        <button
+                            type="button"
+                            className="end-call-btn"
+                            onClick={onEnd}
+                            title="End call"
+                        >
+                            <FaPhoneSlash />
+                        </button>
 
-                    {/* MORE */}
+                    </>
 
-                    <button
-                        type="button"
-                        className="call-control-btn"
-                        title="More"
-                    >
-
-                        <FaEllipsis />
-
-                        <span>
-                            More
-                        </span>
-
-                    </button>
-
-                </div>
-
-
-                {/* =====================================
-                    END CALL
-                ===================================== */}
-
-                <button
-                    type="button"
-                    className="end-call-btn"
-                    onClick={handleEndCall}
-                    title="End call"
-                >
-
-                    <FaPhoneSlash />
-
-                </button>
+                )}
 
             </div>
 

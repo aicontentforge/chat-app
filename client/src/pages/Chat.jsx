@@ -5,6 +5,7 @@ import "../styles/chat.css";
 import api from "../services/api";
 import socket from "../services/socket";
 import { API_ORIGIN } from "../config";
+import { clearStoredUser } from "../utils/authUser";
 
 import ChatBox from "../components/ChatBox";
 import ChatInput from "../components/ChatInput";
@@ -14,6 +15,7 @@ import ImageUpload from "../components/ImageUpload";
 
 import AudioRecorder from "../components/AudioRecorder";
 import FileUpload from "../components/FileUpload";
+import Call from "../components/Call";
 
 import "../styles/header.css";
 import "../styles/input.css";
@@ -103,6 +105,13 @@ function Chat() {
     const [isCallActive, setIsCallActive] = useState(false);
 
     const [callType, setCallType] = useState("audio");
+
+    // "outgoing" | "incoming" | "connected"
+    const [callStatus, setCallStatus] = useState("outgoing");
+    const [callWith, setCallWith] = useState(null);
+    const [callLocalStream, setCallLocalStream] = useState(null);
+    const [callRemoteStream, setCallRemoteStream] = useState(null);
+
     const [showAddPeople, setShowAddPeople] = useState(false);
 
     const [callParticipants, setCallParticipants] = useState([]);
@@ -772,7 +781,7 @@ useEffect(() => {
     
 
     const logout = () => {
-        localStorage.removeItem("user");
+        clearStoredUser();
         localStorage.removeItem("selectedUser");
         socket.disconnect();
         navigate("/login");
@@ -877,62 +886,59 @@ const closeMoreMenu = () => {
 };
 
 
-    const startVoiceCall = async () => {
+    const callRef = useRef(null);
 
-    if (!selectedUser) return;
 
-    try {
+    const startVoiceCall = () => {
 
-        await navigator.mediaDevices.getUserMedia({
-            audio: true
-        });
-
-        setCallParticipants([]);
+        if (!selectedUser || selectedUser.startsWith("group_")) return;
 
         setCallType("audio");
-
+        setCallWith(selectedUser);
+        setCallStatus("outgoing");
         setIsCallActive(true);
 
-    } catch {
+        callRef.current?.startCall(selectedUser, "audio");
 
-        alert("Microphone permission denied.");
-
-    }
-
-};
+    };
 
 
-const startVideoCall = async () => {
+    const startVideoCall = () => {
 
-    if (!selectedUser) return;
-
-    try {
-
-        await navigator.mediaDevices.getUserMedia({
-            audio: true,
-            video: true
-        });
-
-        setCallParticipants([]);
+        if (!selectedUser || selectedUser.startsWith("group_")) return;
 
         setCallType("video");
-
+        setCallWith(selectedUser);
+        setCallStatus("outgoing");
         setIsCallActive(true);
 
-    } catch {
+        callRef.current?.startCall(selectedUser, "video");
 
-        alert("Camera or microphone permission denied.");
-
-    }
-
-};
+    };
 
 
-const endCall = () => {
+    const acceptIncomingCall = () => {
+        callRef.current?.acceptCall();
+    };
 
-    setIsCallActive(false);
 
-};
+    const declineIncomingCall = () => {
+        callRef.current?.declineCall();
+        setIsCallActive(false);
+        setCallWith(null);
+    };
+
+
+    const endCall = () => {
+
+        callRef.current?.hangUp();
+
+        setIsCallActive(false);
+        setCallWith(null);
+        setCallLocalStream(null);
+        setCallRemoteStream(null);
+
+    };
 
 const handleStar = (id) => {
 
@@ -1882,13 +1888,40 @@ if (!user) {
 <CallScreen
     isCallActive={isCallActive}
     callType={callType}
-    contactName={selectedUser}
-    onEnd={() => {
+    callStatus={callStatus}
+    contactName={callWith}
+    localStream={callLocalStream}
+    remoteStream={callRemoteStream}
+    onEnd={endCall}
+    onAccept={acceptIncomingCall}
+    onDecline={declineIncomingCall}
+    onToggleMute={(muted) => callRef.current?.toggleMute(muted)}
+    onToggleVideo={(enabled) => callRef.current?.toggleVideo(enabled)}
+    onAddPeople={openAddPeopleSheet}
+/>
+
+<Call
+    ref={callRef}
+    currentUser={user.username}
+    onIncomingCall={({ from, callType: incomingType }) => {
+        setCallType(incomingType);
+        setCallWith(from);
+        setCallStatus("incoming");
+        setIsCallActive(true);
+    }}
+    onRinging={() => setCallStatus("outgoing")}
+    onConnected={() => setCallStatus("connected")}
+    onEnded={() => {
         setIsCallActive(false);
+        setCallWith(null);
+        setCallLocalStream(null);
+        setCallRemoteStream(null);
         setCallParticipants([]);
         setShowAddPeople(false);
     }}
-    onAddPeople={openAddPeopleSheet}
+    onLocalStream={setCallLocalStream}
+    onRemoteStream={setCallRemoteStream}
+    onError={(message) => alert(message)}
 />
 
 <AddPeopleSheet

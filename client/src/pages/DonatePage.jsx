@@ -73,6 +73,31 @@ function DonatePage() {
             const { orderId, amount: orderAmount, currency, keyId } =
                 orderRes.data;
 
+            /*
+             * This is the most common reason a UPI/GPay QR code
+             * shows "invalid": the Razorpay key in use is a TEST
+             * key (rzp_test_...). Razorpay's test-mode UPI QR
+             * codes are only meant to be scanned inside Razorpay's
+             * own test simulator - a real UPI app like GPay will
+             * always reject them, no matter how correct the rest
+             * of the checkout flow is. If that's what's happening,
+             * the fix is on the backend/Razorpay dashboard (switch
+             * to a live key once KYC/activation is complete), not
+             * in this page - flagging it here so it's obvious
+             * instead of just failing silently.
+             */
+            if (keyId?.startsWith("rzp_test_")) {
+
+                console.warn(
+                    "Razorpay is using a TEST key (" + keyId + "). " +
+                    "Test-mode UPI/QR codes are not real payment " +
+                    "requests and will show as invalid in GPay/PhonePe/etc. " +
+                    "Switch to a live key on the backend once the " +
+                    "Razorpay account is activated for live payments."
+                );
+
+            }
+
             // Step 2: open Razorpay's checkout widget with that order.
             const razorpay = new window.Razorpay({
 

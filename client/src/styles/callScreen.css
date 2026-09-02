@@ -330,6 +330,249 @@
 
 
 /* =========================================================
+   VIDEO CALL
+========================================================= */
+
+.call-video-stage {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: #000;
+
+}
+
+
+.call-remote-video {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+.call-local-video {
+
+    position: absolute;
+
+    right: 18px;
+    top: 18px;
+
+    width: 108px;
+    height: 148px;
+
+    border-radius: 16px;
+
+    object-fit: cover;
+
+    background: #1e1b4b;
+
+    border: 2px solid rgba(255,255,255,.25);
+
+    box-shadow: 0 12px 30px rgba(0,0,0,.4);
+
+    transform: scaleX(-1);
+
+    z-index: 2;
+
+}
+
+
+.call-local-video-off {
+
+    opacity: 0;
+
+}
+
+
+.call-screen-content-video {
+
+    justify-content: flex-end;
+
+    padding-bottom: 46px;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.55),
+            transparent 30%
+        );
+
+}
+
+
+.call-screen-content-video .call-app-name,
+.call-screen-content-video .call-avatar-wrapper {
+
+    display: none;
+
+}
+
+
+.call-screen-content-video .call-contact-name {
+
+    text-shadow: 0 2px 10px rgba(0,0,0,.5);
+
+}
+
+
+.call-screen-content-video .call-controls,
+.call-screen-content-video .end-call-btn {
+
+    margin-top: 22px;
+
+}
+
+
+/* =========================================================
+   RINGING PULSE
+========================================================= */
+
+.call-ring-pulse {
+
+    position: absolute;
+
+    inset: -14px;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(255,255,255,.35);
+
+    animation: callRingPulse 1.6s ease-out infinite;
+
+}
+
+
+@keyframes callRingPulse {
+
+    0% {
+        transform: scale(.85);
+        opacity: .9;
+    }
+
+    100% {
+        transform: scale(1.35);
+        opacity: 0;
+    }
+
+}
+
+
+/* =========================================================
+   INCOMING CALL ACTIONS
+========================================================= */
+
+.call-incoming-actions {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 46px;
+
+    margin-top: 60px;
+
+}
+
+
+.call-accept-btn,
+.call-decline-btn {
+
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    color: #fff;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.call-accept-btn span,
+.call-decline-btn span {
+
+    position: absolute;
+
+    margin-top: 96px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: rgba(255,255,255,.8);
+
+    white-space: nowrap;
+
+}
+
+
+.call-accept-btn {
+
+    background: #22c55e;
+
+    box-shadow: 0 14px 32px rgba(34,197,94,.4);
+
+    animation: callAcceptPulse 1.4s ease-in-out infinite;
+
+}
+
+
+.call-decline-btn {
+
+    background: #ef4444;
+
+    box-shadow: 0 14px 32px rgba(239,68,68,.35);
+
+}
+
+
+.call-accept-btn:hover,
+.call-decline-btn:hover {
+
+    transform: scale(1.08);
+
+}
+
+
+@keyframes callAcceptPulse {
+
+    0%, 100% {
+        box-shadow: 0 14px 32px rgba(34,197,94,.4);
+    }
+
+    50% {
+        box-shadow: 0 14px 32px rgba(34,197,94,.7), 0 0 0 10px rgba(34,197,94,.12);
+    }
+
+}
+
+
+/* =========================================================
    MOBILE
 ========================================================= */
 
@@ -389,33 +632,21 @@
 
     }
 
-}
 
+    .call-local-video {
 
-@media (max-width: 360px) {
+        width: 84px;
+        height: 116px;
 
-    .call-controls {
-
-        gap: 4px;
-
-        flex-wrap: wrap;
+        right: 12px;
+        top: 12px;
 
     }
 
 
-    .call-control-btn {
+    .call-incoming-actions {
 
-        width: 50px;
-        height: 50px;
-
-    }
-
-
-    .call-control-btn span {
-
-        margin-top: 84px;
-
-        font-size: 9px;
+        gap: 34px;
 
     }
 

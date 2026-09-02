@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 
 import ChatInput from "./ChatInput";
-import AudioRecorder from "./AudioRecorder";
 import AttachmentMenu from "./AttachmentMenu";
-import Call from "./Call";
 
 import api from "../services/api";
 
@@ -423,21 +421,7 @@ function InputArea({
 
                 }
 
-                audio={
-
-                    <AudioRecorder
-                        onUploaded={sendAudio}
-                    />
-
-                }
-            />
-
-
-            {/* CALL */}
-
-            <Call
-                currentUser={user.username}
-                selectedUser={selectedUser}
+                onSendAudio={sendAudio}
             />
 
 

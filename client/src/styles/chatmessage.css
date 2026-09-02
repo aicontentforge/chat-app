@@ -352,16 +352,153 @@
 
 
 /* =========================================
-   AUDIO
+   VOICE MESSAGE PLAYER (WhatsApp style)
 ========================================= */
 
-.message-audio {
+.voice-player {
 
-    display: block;
+    display: flex;
 
-    width: min(300px, 100%);
+    align-items: center;
+
+    gap: 10px;
+
+    width: min(280px, 100%);
+
+    padding: 6px 4px;
 
     margin-top: 5px;
+
+}
+
+
+.voice-player-toggle {
+
+    flex: 0 0 38px;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: var(--primary, #4f7cff);
+
+    color: #fff;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: transform .15s ease, opacity .15s ease;
+
+}
+
+
+.voice-player-toggle:hover {
+
+    transform: scale(1.06);
+
+}
+
+
+.voice-player-toggle:disabled {
+
+    opacity: .5;
+
+    cursor: default;
+
+}
+
+
+.voice-player-mine .voice-player-toggle {
+
+    background: #ffffff;
+
+    color: var(--primary, #4f7cff);
+
+}
+
+
+.voice-player-track {
+
+    flex: 1 1 auto;
+
+    min-width: 0;
+
+    height: 26px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 2.5px;
+
+    cursor: pointer;
+
+}
+
+
+.voice-player-bar {
+
+    flex: 1 1 0;
+
+    min-width: 2px;
+
+    max-width: 3px;
+
+    border-radius: 2px;
+
+    background: rgba(79, 124, 255, .3);
+
+    transition: background-color .15s ease;
+
+}
+
+
+.voice-player-bar-played {
+
+    background: var(--primary, #4f7cff);
+
+}
+
+
+.voice-player-mine .voice-player-bar {
+
+    background: rgba(255, 255, 255, .35);
+
+}
+
+
+.voice-player-mine .voice-player-bar-played {
+
+    background: #ffffff;
+
+}
+
+
+.voice-player-time {
+
+    flex: 0 0 auto;
+
+    font-size: 11.5px;
+
+    font-variant-numeric: tabular-nums;
+
+    color: var(--text-muted, #94a3b8);
+
+}
+
+
+.voice-player-mine .voice-player-time {
+
+    color: rgba(255, 255, 255, .8);
 
 }
 

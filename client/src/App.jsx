@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
@@ -13,15 +14,24 @@ import GlobalPostDetail from "./pages/GlobalPostDetail";
 import TopSupporters from "./pages/TopSupporters";
 import DonatePage from "./pages/DonatePage";
 
+import { getStoredUser, onAuthChange } from "./utils/authUser";
+
 function App() {
 
-    const user = (() => {
-    try {
-        return JSON.parse(localStorage.getItem("user"));
-    } catch {
-        return null;
-    }
-})();
+    // Was previously a plain `const` computed once at mount,
+    // which is why every guarded route below could get stuck
+    // showing stale logged-out state - see utils/authUser.js.
+    const [user, setUser] = useState(getStoredUser);
+
+    useEffect(() => {
+
+        const unsubscribe = onAuthChange(() => {
+            setUser(getStoredUser());
+        });
+
+        return unsubscribe;
+
+    }, []);
 
     return (
 

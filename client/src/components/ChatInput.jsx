@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { FiSend } from "react-icons/fi";
+import AudioRecorder from "./AudioRecorder";
 import "../styles/chatinput.css";
 
 function ChatInput({
@@ -10,10 +11,11 @@ function ChatInput({
     onTyping,
     onStopTyping,
     attachment,
-    audio
+    onSendAudio
 }) {
 
     const [showEmoji, setShowEmoji] = useState(false);
+    const [recording, setRecording] = useState(false);
 
     const textareaRef = useRef(null);
     const timer = useRef(null);
@@ -67,66 +69,85 @@ function ChatInput({
 
     return (
 
-        <div className="chat-input-wrapper">
+        <div
+            className={`chat-input-wrapper ${
+                recording ? "chat-input-wrapper-recording" : ""
+            }`}
+        >
 
-            <button
-                type="button"
-                className="emoji-btn"
-                onClick={() =>
-                    setShowEmoji(prev => !prev)
-                }
-            >
-                😊
-            </button>
+            {!recording && (
 
-            {attachment}
+                <>
 
-            {showEmoji && (
+                    <button
+                        type="button"
+                        className="emoji-btn"
+                        onClick={() =>
+                            setShowEmoji(prev => !prev)
+                        }
+                    >
+                        😊
+                    </button>
 
-                <div className="emoji-picker">
+                    {attachment}
 
-                    <EmojiPicker
-                        onEmojiClick={handleEmoji}
+                    {showEmoji && (
+
+                        <div className="emoji-picker">
+
+                            <EmojiPicker
+                                onEmojiClick={handleEmoji}
+                            />
+
+                        </div>
+
+                    )}
+
+                    <textarea
+                        ref={textareaRef}
+                        value={text}
+                        placeholder="Type your message..."
+                        onChange={handleChange}
+                        className="chat-textarea"
+                        rows={1}
+                        onKeyDown={(e) => {
+
+                            if (
+                                e.key === "Enter" &&
+                                !e.shiftKey
+                            ) {
+
+                                e.preventDefault();
+
+                                send();
+
+                            }
+
+                        }}
                     />
 
-                </div>
+                </>
 
             )}
 
-            <textarea
-                ref={textareaRef}
-                value={text}
-                placeholder="Type your message..."
-                onChange={handleChange}
-                className="chat-textarea"
-                rows={1}
-                onKeyDown={(e) => {
-
-                    if (
-                        e.key === "Enter" &&
-                        !e.shiftKey
-                    ) {
-
-                        e.preventDefault();
-
-                        send();
-
-                    }
-
-                }}
+            <AudioRecorder
+                onUploaded={onSendAudio}
+                onRecordingChange={setRecording}
             />
 
-            {audio}
+            {!recording && (
 
-            <button
-                type="button"
-                className="send-btn"
-                onClick={send}
-                aria-label="Send message"
-                title="Send"
-            >
-                <FiSend />
-            </button>
+                <button
+                    type="button"
+                    className="send-btn"
+                    onClick={send}
+                    aria-label="Send message"
+                    title="Send"
+                >
+                    <FiSend />
+                </button>
+
+            )}
 
         </div>
     );

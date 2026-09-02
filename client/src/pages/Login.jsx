@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
+import { setStoredUser } from "../utils/authUser";
 import "../styles/auth.css";
 
 function Login(){
@@ -17,12 +18,7 @@ function Login(){
             password
         });
 
-        localStorage.setItem(
-            "user",
-            JSON.stringify(res.data.user)
-        );
-
-        alert(localStorage.getItem("user")); // TEMPORARY
+        setStoredUser(res.data.user);
 
         navigate("/chat");
 

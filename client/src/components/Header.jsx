@@ -108,23 +108,31 @@ function Header({
 
             <div className="header-right">
 
-    <button
-        type="button"
-        className="header-icon-btn phone-btn"
-        title="Voice Call"
-        onClick={() => startVoiceCall?.()}
-    >
-        <FaPhone />
-    </button>
+    {selectedUser && !isGroupChat && (
 
-    <button
-        type="button"
-        className="header-icon-btn video-btn"
-        title="Video Call"
-        onClick={() => startVideoCall?.()}
-    >
-        <FaVideo />
-    </button>
+        <button
+            type="button"
+            className="header-icon-btn phone-btn"
+            title="Voice Call"
+            onClick={() => startVoiceCall?.()}
+        >
+            <FaPhone />
+        </button>
+
+    )}
+
+    {selectedUser && !isGroupChat && (
+
+        <button
+            type="button"
+            className="header-icon-btn video-btn"
+            title="Video Call"
+            onClick={() => startVideoCall?.()}
+        >
+            <FaVideo />
+        </button>
+
+    )}
 
     {/* OLD THEME BUTTON */}
     <button

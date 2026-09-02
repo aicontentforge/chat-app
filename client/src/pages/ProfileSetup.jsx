@@ -82,7 +82,7 @@ function ProfileSetup() {
 
         });
 
-        navigate("/");
+        navigate("/chat");
 
     };
 

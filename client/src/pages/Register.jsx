@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
+import { setStoredUser } from "../utils/authUser";
 import "../styles/auth.css";
 
 function Register() {
@@ -27,16 +28,10 @@ function Register() {
     password
 });
 
-        localStorage.setItem(
-
-            "user",
-
-            JSON.stringify(res.data.user)
-
-        );
+        setStoredUser(res.data.user);
 
         // Go to Profile Setup first
-        navigate("/profile");
+        navigate("/profile-setup");
 
     } catch (err) {
     console.log(err);

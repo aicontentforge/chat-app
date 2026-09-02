@@ -14,6 +14,7 @@ import {
 import socket from "../services/socket";
 import { API_ORIGIN } from "../config";
 import DonorBadge from "./DonorBadge";
+import VoiceMessagePlayer from "./VoiceMessagePlayer";
 
 import "../styles/chatmessage.css";
 
@@ -374,16 +375,10 @@ function ChatMessage({
 
                                 {message.audio && (
 
-                                    <audio
-                                        className="message-audio"
-                                        controls
-                                    >
-
-                                        <source
-                                            src={`${API_ORIGIN}${message.audio}`}
-                                        />
-
-                                    </audio>
+                                    <VoiceMessagePlayer
+                                        src={`${API_ORIGIN}${message.audio}`}
+                                        mine={mine}
+                                    />
 
                                 )}
 
