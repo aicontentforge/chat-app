@@ -9,6 +9,7 @@ import "../styles/globalchat.css";
 import SharePostSheet from "../components/SharePostSheet";
 import UserList from "../components/UserList";
 import DonorBadge from "../components/DonorBadge";
+import BadgeCollection from "../components/BadgeCollection";
 
 function relativeTime(date) {
     const diff = Date.now() - new Date(date).getTime();
@@ -116,6 +117,17 @@ function GlobalChat() {
 
 
     /* =========================================
+       MY PROFILE MENU
+    ========================================= */
+
+    const [showProfileMenu, setShowProfileMenu] =
+        useState(false);
+
+    const [showMyCollection, setShowMyCollection] =
+        useState(false);
+
+
+    /* =========================================
        SIDEBAR DATA
     ========================================= */
 
@@ -160,6 +172,13 @@ function GlobalChat() {
     const touchStartX = useRef(null);
 
     const touchStartY = useRef(null);
+
+
+    /* =========================================
+       FEED SCROLL (keep newest message in view)
+    ========================================= */
+
+    const feedRef = useRef(null);
 
 
     /* =========================================
@@ -253,6 +272,14 @@ function GlobalChat() {
 
     /* =========================================
        LOAD POSTS
+
+       Rendered oldest -> newest (top -> bottom)
+       so the feed reads like a chat log, with
+       the newest message always sitting at the
+       bottom. Sorting here (instead of trusting
+       the API's order) means this keeps working
+       correctly no matter which order the server
+       sends posts in.
     ========================================= */
 
     const loadPosts = async () => {
@@ -271,7 +298,14 @@ function GlobalChat() {
                     }
                 );
 
-            setPosts(response.data);
+            const oldestFirst =
+                [...response.data].sort(
+                    (a, b) =>
+                        new Date(a.createdAt) -
+                        new Date(b.createdAt)
+                );
+
+            setPosts(oldestFirst);
 
         } catch (error) {
 
@@ -294,6 +328,30 @@ function GlobalChat() {
         loadPosts();
 
     }, []);
+
+
+    /* =========================================
+       KEEP NEWEST MESSAGE IN VIEW
+
+       Runs after the initial load and every time
+       a post is added/removed, so the feed always
+       settles on the latest message at the bottom
+       (right side, for your own messages) instead
+       of leaving the view scrolled somewhere in
+       the middle.
+    ========================================= */
+
+    useEffect(() => {
+
+        if (loading) return;
+
+        const feedEl = feedRef.current;
+
+        if (!feedEl) return;
+
+        feedEl.scrollTop = feedEl.scrollHeight;
+
+    }, [posts.length, loading]);
 
 
     /* =========================================
@@ -328,9 +386,16 @@ function GlobalChat() {
 
             if (response.data.success) {
 
+                /*
+                 * Appended to the END so it lands at
+                 * the bottom (newest message), not the
+                 * top. The feed auto-scrolls down to
+                 * reveal it - see the scroll effect below.
+                 */
+
                 setPosts(prev => [
-                    response.data.post,
-                    ...prev
+                    ...prev,
+                    response.data.post
                 ]);
 
                 setText("");
@@ -850,23 +915,68 @@ function GlobalChat() {
                 <div className="global-sidebar-top">
 
 
-                    <div className="global-sidebar-brand">
+                    <div className="global-sidebar-brand global-my-profile">
 
-                        <div className="global-sidebar-logo">
-                            💬
-                        </div>
+                        <button
+                            type="button"
+                            className="global-my-profile-trigger"
+                            onClick={() =>
+                                setShowProfileMenu(prev => !prev)
+                            }
+                        >
+                            <img
+                                src={currentAvatar}
+                                alt=""
+                                className="global-my-profile-avatar"
+                            />
+                        </button>
 
                         <div>
 
                             <h2>
-                                ChatSphere
+                                {currentUser?.displayName ||
+                                    currentUser?.username ||
+                                    "Profile"}
                             </h2>
 
                             <span>
-                                Professional Messenger
+                                My Profile
                             </span>
 
                         </div>
+
+
+                        {showProfileMenu && (
+
+                            <>
+
+                                <div
+                                    className="global-my-profile-backdrop"
+                                    onClick={() =>
+                                        setShowProfileMenu(false)
+                                    }
+                                />
+
+                                <div className="global-my-profile-menu">
+
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+
+                                            setShowMyCollection(true);
+
+                                            setShowProfileMenu(false);
+
+                                        }}
+                                    >
+                                        🏅 Collection
+                                    </button>
+
+                                </div>
+
+                            </>
+
+                        )}
 
                     </div>
 
@@ -1046,6 +1156,7 @@ function GlobalChat() {
 
                 <section
                     className="global-chat-feed"
+                    ref={feedRef}
                 >
 
                     {loading ? (
@@ -1619,6 +1730,50 @@ function GlobalChat() {
                         >
                             Cancel
                         </button>
+
+                    </div>
+
+                </div>
+
+            )}
+
+
+            {/* =====================================
+                MY BADGE COLLECTION
+            ===================================== */}
+
+            {showMyCollection && (
+
+                <div
+                    className="global-moderation-overlay"
+                    onClick={() =>
+                        setShowMyCollection(false)
+                    }
+                >
+
+                    <div
+                        className="global-collection-dialog"
+                        onClick={e =>
+                            e.stopPropagation()
+                        }
+                    >
+
+                        <button
+                            type="button"
+                            className="global-collection-close"
+                            onClick={() =>
+                                setShowMyCollection(false)
+                            }
+                            aria-label="Close"
+                        >
+                            ✕
+                        </button>
+
+                        <BadgeCollection
+                            username={currentUser?.username}
+                            title="My Badge Collection"
+                            subtitle="Badges you've held at the end of each month"
+                        />
 
                     </div>
 

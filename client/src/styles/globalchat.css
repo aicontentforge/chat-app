@@ -137,6 +137,156 @@
 
 
 /* =========================================================
+   MY PROFILE (replaces the old brand icon + name)
+========================================================= */
+
+.global-my-profile {
+
+    position: relative;
+
+}
+
+
+.global-my-profile-trigger {
+
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px
+        rgba(79,124,255,.25);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+}
+
+
+.global-my-profile-trigger:hover {
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 10px 24px
+        rgba(79,124,255,.32);
+
+}
+
+
+.global-my-profile-avatar {
+
+    width: 42px !important;
+    height: 42px !important;
+
+    display: block;
+
+    border-radius: 50% !important;
+
+    object-fit: cover;
+
+    border:
+        2px solid var(--surface);
+
+}
+
+
+.global-my-profile-backdrop {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 199;
+
+    background: transparent;
+
+}
+
+
+.global-my-profile-menu {
+
+    position: absolute;
+
+    top: calc(100% + 8px);
+
+    left: 0;
+
+    z-index: 200;
+
+    min-width: 175px;
+
+    padding: 6px;
+
+    border-radius: 13px;
+
+    background:
+        var(--surface);
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:
+        0 18px 40px
+        rgba(15,23,42,.18);
+
+}
+
+
+.global-my-profile-menu button {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 12px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color:
+        var(--text);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-align: left;
+
+    cursor: pointer;
+
+}
+
+
+.global-my-profile-menu button:hover {
+
+    background:
+        var(--border);
+
+}
+
+
+/* =========================================================
    SIDEBAR BUTTONS
 ========================================================= */
 
@@ -1601,6 +1751,83 @@
 
     color:
         #ffffff;
+
+}
+
+
+/* =========================================================
+   MY BADGE COLLECTION DIALOG
+   (bigger than the moderation dialogs above, since it
+   holds a scrollable list rather than a couple of buttons)
+========================================================= */
+
+.global-collection-dialog {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 460px;
+
+    max-height: min(80vh, 600px);
+
+    box-sizing: border-box;
+
+    padding: 26px 22px 22px;
+
+    border-radius: 22px;
+
+    background:
+        var(--surface);
+
+    border:
+        1px solid var(--border);
+
+    box-shadow:
+        0 25px 70px
+        rgba(15,23,42,.22);
+
+    overflow: hidden;
+
+}
+
+
+.global-collection-close {
+
+    position: absolute;
+
+    top: 14px;
+    right: 14px;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        var(--background);
+
+    color:
+        var(--text);
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+}
+
+
+.global-collection-close:hover {
+
+    background:
+        var(--border);
 
 }
 

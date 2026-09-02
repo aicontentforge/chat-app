@@ -1,4 +1,5 @@
 import "../styles/infopanel.css";
+import BadgeCollection from "./BadgeCollection";
 
 function InfoPanel({
     user,
@@ -22,6 +23,13 @@ function InfoPanel({
 }) {
 
     const online = onlineUsers.includes(selectedUser);
+
+    /*
+     * Groups don't have a personal donor badge, so the
+     * collection only makes sense for a real 1-to-1 contact.
+     */
+    const isGroupChat =
+        !!selectedUser && selectedUser.startsWith("group_");
 
     return (
 
@@ -55,6 +63,10 @@ function InfoPanel({
                 <span className={online ? "info-status online" : "info-status"}>
                     {online ? "Online" : "Offline"}
                 </span>
+
+                {!isGroupChat && (
+                    <BadgeCollection username={selectedUser} />
+                )}
 
                 <div
     className="info-card"

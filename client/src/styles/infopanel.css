@@ -41,6 +41,12 @@ background:#dcfce7;
 color:#16a34a;
 }
 
+.info-panel .badge-collection{
+
+margin-top:18px;
+
+}
+
 .info-card{
 
 width:100%;
@@ -131,7 +137,7 @@ position:fixed;
 top:0;
 right:0;
 
-width:370px;
+width: min(370px, 92vw);
 height:100vh;
 
 background:#fff;
