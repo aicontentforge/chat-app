@@ -1020,6 +1020,32 @@ function GlobalChat() {
 
                     </button>
 
+
+                    <button
+                        className="global-dashboard-btn"
+                        onClick={() => {
+
+                            setSidebarOpen(false);
+
+                            /*
+                             * Clear any stale selected
+                             * conversation so Chat.jsx
+                             * reliably lands on the
+                             * Dashboard instead of
+                             * resuming an old chat.
+                             */
+                            localStorage.removeItem(
+                                "selectedUser"
+                            );
+
+                            navigate("/chat");
+
+                        }}
+                    >
+                        <span>🏠</span>
+                        Dashboard
+                    </button>
+
                 </div>
 
 

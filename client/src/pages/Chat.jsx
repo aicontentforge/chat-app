@@ -37,6 +37,7 @@ import CallScreen from "../components/CallScreen";
 import AddPeopleSheet from "../components/AddPeopleSheet";
 import ForwardModal from "../components/ForwardModal";
 import SelectionBar from "../components/SelectionBar";
+import BadgeCollection from "../components/BadgeCollection";
 
 
 function Chat() {
@@ -75,6 +76,8 @@ function Chat() {
     const [showMoreMenu, setShowMoreMenu] = useState(false);
     const [showInfoPanel, setShowInfoPanel] = useState(false);
     const [showProfileModal, setShowProfileModal] = useState(false);
+    const [showMyProfileMenu, setShowMyProfileMenu] = useState(false);
+    const [showMyCollection, setShowMyCollection] = useState(false);
     const [profileData, setProfileData] = useState(null);
     const [showMedia, setShowMedia] = useState(false);
 
@@ -1515,6 +1518,16 @@ const updateConversationStorage = (data) => {
 
 
 
+/* =========================================
+   CURRENT USER AVATAR
+========================================= */
+
+const currentAvatar =
+    user?.avatar
+        ? `${API_ORIGIN}${user.avatar}`
+        : `https://api.dicebear.com/9.x/initials/svg?seed=${user?.username || "User"}`;
+
+
 if (!user) {
     return null;
 }
@@ -1543,17 +1556,64 @@ if (!user) {
 
     <div className="sidebar-top">
 
-        <div className="logo">
+        <div className="logo my-profile">
 
-            <div className="logo-icon">💬</div>
+            <button
+                type="button"
+                className="my-profile-trigger"
+                onClick={() =>
+                    setShowMyProfileMenu(prev => !prev)
+                }
+            >
+                <img
+                    src={currentAvatar}
+                    alt=""
+                    className="my-profile-avatar"
+                />
+            </button>
 
             <div>
 
-                <h2>ChatSphere</h2>
+                <h2>
+                    {user?.displayName || user?.username || "Profile"}
+                </h2>
 
-                <span>Professional Messenger</span>
+                <span>My Profile</span>
 
             </div>
+
+
+            {showMyProfileMenu && (
+
+                <>
+
+                    <div
+                        className="my-profile-backdrop"
+                        onClick={() =>
+                            setShowMyProfileMenu(false)
+                        }
+                    />
+
+                    <div className="my-profile-menu">
+
+                        <button
+                            type="button"
+                            onClick={() => {
+
+                                setShowMyCollection(true);
+
+                                setShowMyProfileMenu(false);
+
+                            }}
+                        >
+                            🏅 Collection
+                        </button>
+
+                    </div>
+
+                </>
+
+            )}
 
         </div>
 
@@ -1833,6 +1893,39 @@ if (!user) {
     onClose={closeProfile}
     profile={profileData}
 />
+
+    {showMyCollection && (
+
+        <div
+            className="my-collection-overlay"
+            onClick={() => setShowMyCollection(false)}
+        >
+
+            <div
+                className="my-collection-dialog"
+                onClick={e => e.stopPropagation()}
+            >
+
+                <button
+                    type="button"
+                    className="my-collection-close"
+                    onClick={() => setShowMyCollection(false)}
+                    aria-label="Close"
+                >
+                    ✕
+                </button>
+
+                <BadgeCollection
+                    username={user?.username}
+                    title="My Badge Collection"
+                    subtitle="Badges you've held at the end of each month"
+                />
+
+            </div>
+
+        </div>
+
+    )}
 
 <MediaGallery
 

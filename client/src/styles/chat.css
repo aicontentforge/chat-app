@@ -388,6 +388,234 @@ textarea:focus{
 
 }
 
+
+/* =========================================================
+   MY PROFILE (replaces the old logo + "ChatSphere" name)
+========================================================= */
+
+.my-profile {
+
+    position: relative;
+
+}
+
+.my-profile-trigger {
+
+    width: 56px;
+    height: 56px;
+
+    flex: 0 0 56px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 20px rgba(37,99,235,.28);
+
+    transition: transform .2s ease, box-shadow .2s ease;
+
+}
+
+.my-profile-trigger:hover {
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 10px 24px rgba(37,99,235,.35);
+
+}
+
+.my-profile-avatar {
+
+    width: 56px !important;
+    height: 56px !important;
+
+    display: block;
+
+    border-radius: 50% !important;
+
+    object-fit: cover;
+
+    border: 2px solid var(--surface, #fff);
+
+}
+
+.my-profile-backdrop {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 199;
+
+    background: transparent;
+
+}
+
+.my-profile-menu {
+
+    position: absolute;
+
+    top: calc(100% + 8px);
+
+    left: 0;
+
+    z-index: 200;
+
+    min-width: 175px;
+
+    padding: 6px;
+
+    border-radius: 13px;
+
+    background: var(--surface, #fff);
+
+    border: 1px solid var(--border, #e5e7eb);
+
+    box-shadow: 0 18px 40px rgba(15,23,42,.18);
+
+}
+
+.my-profile-menu button {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 12px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: var(--text, #111827);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-align: left;
+
+    cursor: pointer;
+
+}
+
+.my-profile-menu button:hover {
+
+    background: var(--border, #eef1f6);
+
+}
+
+
+/* =========================================================
+   MY BADGE COLLECTION MODAL
+========================================================= */
+
+.my-collection-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(0,0,0,.45);
+
+    backdrop-filter: blur(6px);
+
+}
+
+.my-collection-dialog {
+
+    position: relative;
+
+    width: min(460px, 92vw);
+
+    max-height: min(80vh, 600px);
+
+    box-sizing: border-box;
+
+    padding: 26px 22px 22px;
+
+    border-radius: 22px;
+
+    background: var(--surface, #fff);
+
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+
+    overflow: hidden;
+
+    animation: myCollectionPopup .25s ease;
+
+}
+
+@keyframes myCollectionPopup {
+
+    from {
+        opacity: 0;
+        transform: scale(.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+.my-collection-close {
+
+    position: absolute;
+
+    top: 14px;
+    right: 14px;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: var(--background, #f3f4f6);
+
+    color: var(--text, #111827);
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+}
+
+.my-collection-close:hover {
+
+    background: var(--border, #e5e7eb);
+
+}
+
+
 .new-chat-btn{
 
     width:100%;

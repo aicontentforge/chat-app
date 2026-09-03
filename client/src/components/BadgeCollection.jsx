@@ -13,6 +13,19 @@ const MONTH_NAMES = [
 
 
 /*
+ * Your server doesn't have GET /users/badge-history/:username
+ * yet, so this stays OFF for now - the box just shows the
+ * normal "No badges yet" state everywhere, with no network
+ * requests and nothing failing in the console.
+ *
+ * Once that endpoint exists on your backend, flip this to
+ * `true` and real history will start showing up automatically -
+ * nothing else here needs to change.
+ */
+const BADGE_HISTORY_ENABLED = false;
+
+
+/*
  * Turns one month's saved snapshot into a badge to display,
  * using the exact same tiers as the live DonorBadge component:
  *   - rank 1              -> crown
@@ -84,6 +97,16 @@ function BadgeCollection({
     useEffect(() => {
 
         if (!username) {
+
+            setEntries([]);
+
+            setStatus("ready");
+
+            return;
+
+        }
+
+        if (!BADGE_HISTORY_ENABLED) {
 
             setEntries([]);
 
