@@ -35,7 +35,13 @@ function Profile() {
     country: "",
     countryCode: "",
 
-    categories: []
+    categories: [],
+
+    // Whether other people can find this account via search /
+    // "New Chat". This is the ONLY screen in the app where it can
+    // be viewed or changed after initial signup, so it defaults to
+    // true and is overwritten as soon as the real value loads below.
+    discoverable: true
 });
 
     useEffect(() => {
@@ -77,7 +83,9 @@ function Profile() {
 
     age: profile.age,
 
-    categories: profile.categories
+    categories: profile.categories,
+
+    discoverable: profile.discoverable
 
 });
 
@@ -282,6 +290,41 @@ const toggleCategory = (category) => {
             }
 
         />
+
+        <div className="profile-toggle-row">
+
+            <div>
+                <strong>🔍 Discoverable</strong>
+                <p className="profile-toggle-hint">
+                    Lets people find your username and Chat ID in
+                    Discover and New Chat search. Turn this on if
+                    someone can't find you to start a chat.
+                </p>
+            </div>
+
+            <label className="profile-toggle-switch">
+
+                <input
+                    type="checkbox"
+                    checked={!!profile.discoverable}
+                    onChange={(e)=>
+
+                        setProfile({
+
+                            ...profile,
+
+                            discoverable: e.target.checked
+
+                        })
+
+                    }
+                />
+
+                <span className="profile-toggle-slider" />
+
+            </label>
+
+        </div>
 
         <LocationPicker
     onLocation={(location)=>{

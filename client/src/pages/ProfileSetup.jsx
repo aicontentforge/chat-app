@@ -60,29 +60,43 @@ function ProfileSetup() {
 
     const saveProfile = async () => {
 
-        await api.put("/users/profile", {
+        try {
 
-            username: currentUser.username,
+            await api.put("/users/profile", {
 
-            displayName: currentUser.displayName,
+                username: currentUser.username,
 
-            avatar: currentUser.avatar,
+                displayName: currentUser.displayName,
 
-            bio: "",
+                avatar: currentUser.avatar,
 
-            gender,
+                bio: "",
 
-            country,
+                gender,
 
-            city,
+                country,
 
-            discoverable,
+                city,
 
-            categories
+                discoverable,
 
-        });
+                categories
 
-        navigate("/chat");
+            });
+
+            navigate("/chat");
+
+        } catch (err) {
+
+            console.log(err);
+
+            alert(
+                "Couldn't save your profile - check your connection " +
+                "and tap Continue again. (If this keeps happening, " +
+                "you can finish setup later from Profile in the menu.)"
+            );
+
+        }
 
     };
 

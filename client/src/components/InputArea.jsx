@@ -4,6 +4,7 @@ import ChatInput from "./ChatInput";
 import AttachmentMenu from "./AttachmentMenu";
 
 import api from "../services/api";
+import { ensureConnected } from "../services/socket";
 
 function InputArea({
     selectedUser,
@@ -99,7 +100,7 @@ function InputArea({
     =========================================================
     */
 
-    const handleSend = () => {
+    const handleSend = async () => {
 
         const originalText = inputText.trim();
 
@@ -115,9 +116,13 @@ function InputArea({
         /*
         Send through Chat.jsx so its existing
         group/private-message logic remains intact.
+        send() resolves false (and shows its own warning) if it
+        couldn't actually reach the server - in that case we keep
+        the text in the box instead of wiping it, so what was typed
+        never just silently vanishes.
         */
 
-        send(
+        const ok = await send(
             sendAsTranslated && translatedText
                 ? translatedText
                 : originalText,
@@ -136,6 +141,10 @@ function InputArea({
             }
         );
 
+        if (ok === false) {
+            return;
+        }
+
 
         setInputText("");
         setTranslatedPreview("");
@@ -150,7 +159,17 @@ function InputArea({
     =========================================================
     */
 
-    const sendImage = (imageUrl) => {
+    const sendImage = async (imageUrl) => {
+
+        const connected = await ensureConnected();
+
+        if (!connected) {
+            alert(
+                "You're offline right now, so that image wasn't " +
+                "sent to the chat. Reconnect and try sending it again."
+            );
+            return;
+        }
 
         if (selectedUser.startsWith("group_")) {
 
@@ -211,7 +230,17 @@ function InputArea({
     =========================================================
     */
 
-    const sendAudio = (audioUrl) => {
+    const sendAudio = async (audioUrl) => {
+
+        const connected = await ensureConnected();
+
+        if (!connected) {
+            alert(
+                "You're offline right now, so that voice message " +
+                "wasn't sent to the chat. Reconnect and try again."
+            );
+            return;
+        }
 
         if (selectedUser.startsWith("group_")) {
 
@@ -274,7 +303,17 @@ function InputArea({
     =========================================================
     */
 
-    const sendFile = (fileData) => {
+    const sendFile = async (fileData) => {
+
+        const connected = await ensureConnected();
+
+        if (!connected) {
+            alert(
+                "You're offline right now, so that file wasn't " +
+                "sent to the chat. Reconnect and try again."
+            );
+            return;
+        }
 
         if (selectedUser.startsWith("group_")) {
 

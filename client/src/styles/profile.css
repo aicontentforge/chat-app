@@ -169,3 +169,121 @@ background:#3b82f6;
 color:white;
 
 }
+
+.profile-toggle-row{
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:16px;
+
+    padding:16px;
+
+    background:#f3f4f6;
+
+    border-radius:14px;
+
+    box-sizing:border-box;
+
+}
+
+.profile-toggle-row strong{
+
+    display:block;
+
+    font-size:15px;
+
+}
+
+.profile-toggle-hint{
+
+    margin:4px 0 0;
+
+    color:#6b7280;
+
+    font-size:13px;
+
+    line-height:1.4;
+
+}
+
+.profile-toggle-switch{
+
+    position:relative;
+
+    display:inline-block;
+
+    width:46px;
+
+    height:26px;
+
+    flex-shrink:0;
+
+}
+
+.profile-toggle-switch input{
+
+    opacity:0;
+
+    width:0;
+
+    height:0;
+
+}
+
+.profile-toggle-slider{
+
+    position:absolute;
+
+    cursor:pointer;
+
+    inset:0;
+
+    background:#d1d5db;
+
+    border-radius:999px;
+
+    transition:.2s;
+
+}
+
+.profile-toggle-slider::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:20px;
+
+    height:20px;
+
+    left:3px;
+
+    top:3px;
+
+    background:white;
+
+    border-radius:50%;
+
+    transition:.2s;
+
+    box-shadow:0 1px 3px rgba(0,0,0,.3);
+
+}
+
+.profile-toggle-switch input:checked + .profile-toggle-slider{
+
+    background:#2563eb;
+
+}
+
+.profile-toggle-switch input:checked + .profile-toggle-slider::before{
+
+    transform:translateX(20px);
+
+}

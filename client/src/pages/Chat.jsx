@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/chat.css";
 
 import api from "../services/api";
-import socket from "../services/socket";
+import socket, { ensureConnected } from "../services/socket";
 import { API_ORIGIN } from "../config";
 import { clearStoredUser } from "../utils/authUser";
 
@@ -702,9 +702,22 @@ useEffect(() => {
         });
     };
 
-    const send = (text, translation = {}) => {
+    const send = async (text, translation = {}) => {
 
-    if (!selectedUser) return;
+    if (!selectedUser) return false;
+
+    // Don't emit into a dead socket and pretend it worked - make
+    // sure we're actually connected first (this will wait briefly
+    // and try to reconnect if we're not).
+    const connected = await ensureConnected();
+
+    if (!connected) {
+        alert(
+            "You're offline right now, so that message wasn't sent. " +
+            "It's still in the box - reconnect and hit send again."
+        );
+        return false;
+    }
 
     const {
         originalMessage = text,
@@ -747,7 +760,7 @@ useEffect(() => {
 
         setReplyMessage(null);
 
-        return;
+        return true;
     }
 
 
@@ -779,6 +792,8 @@ useEffect(() => {
     });
 
     setReplyMessage(null);
+
+    return true;
 };
 
     
